@@ -1,12 +1,14 @@
 import HandlerError from '../handler/handlerError';
 import IOpenai from '../interface/IOpenai';
+import UserHistoricModel from '../model/userHistoricModel';
+import UserHistoricService from './userHistoricService';
 import { configuration } from '../utils/openai';
 import { OpenAIApi } from 'openai';
 
 const openai = new OpenAIApi(configuration);
 
 export default class OpenaiService {
-  public static async send(content: string): Promise<IOpenai> {
+  public static async send(content: string, userId: string): Promise<IOpenai> {
     try {
       const response = await openai.createChatCompletion({
         model: 'gpt-3.5-turbo-0301',
@@ -21,6 +23,14 @@ export default class OpenaiService {
         n: 1,
         temperature: 0.2,
       });
+      const model = <UserHistoricModel>{};
+      model.userId = userId;
+      model.content = response.data.choices[0].message?.content;
+      try {
+        await UserHistoricService.save(model);
+      } catch (error) {
+        throw new HandlerError('Ocorreu um ao salvar o histórico', 503);
+      }
       return {
         error: false,
         message: response.data.choices[0].message?.content,

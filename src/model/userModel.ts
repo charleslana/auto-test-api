@@ -56,6 +56,12 @@ UserModel.init(
       allowNull: false,
       defaultValue: 0,
     },
+    maximumExperience: {
+      type: DataTypes.VIRTUAL(DataTypes.INTEGER, ['maximumExperience']),
+      get: function () {
+        return 50 * this.get('level');
+      },
+    },
     score: {
       type: DataTypes.INTEGER,
       allowNull: false,

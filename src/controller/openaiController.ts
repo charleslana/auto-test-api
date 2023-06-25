@@ -13,7 +13,9 @@ export default class OpenaiController {
     );
     try {
       const { content } = request.body;
-      return response.status(200).json(await OpenaiService.send(content));
+      return response
+        .status(200)
+        .json(await OpenaiService.send(content, request.user.id));
     } catch (error) {
       next(error);
     }
