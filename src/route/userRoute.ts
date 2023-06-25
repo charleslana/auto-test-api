@@ -4,6 +4,7 @@ import UserController from '../controller/userController';
 import {
   userCreateMiddleware,
   userLoginMiddleware,
+  userPasswordMiddleware,
   userUpdateNameMiddleware,
 } from '../middleware/celebrate/userCelebrate';
 
@@ -21,6 +22,14 @@ userRoute
     userUpdateNameMiddleware(),
     authenticateMiddleware,
     UserController.changeName
+  );
+
+userRoute
+  .route('/change-password')
+  .put(
+    userPasswordMiddleware(),
+    authenticateMiddleware,
+    UserController.changePassword
   );
 
 export default userRoute;

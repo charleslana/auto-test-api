@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import HandlerError from '../handler/handlerError';
 import HandlerSuccess from '../handler/handlerSuccess';
+import IPassword from '../interface/IPassword';
 import IUserAuthenticate from '../interface/IUserAuthenticate';
 import jwt from 'jsonwebtoken';
 import sequelize, { Optional } from 'sequelize';
@@ -45,6 +46,30 @@ export default class UserService {
     return find;
   }
 
+  public static async updateBounty(
+    id: string,
+    experience: number,
+    score: number
+  ): Promise<void> {
+    const find = await this.get(id);
+    if (!find) {
+      throw new HandlerError('Usuário não encontrado.', 400);
+    }
+    const userUpdated = await UserModel.update(
+      {
+        experience: sequelize.literal(`experience + ${experience}`),
+        score: sequelize.literal(`score + ${score}`),
+      },
+      {
+        where: {
+          id: id,
+        },
+        returning: true,
+      }
+    );
+    await this.validateUserLevel(userUpdated[1][0].get());
+  }
+
   public static async updateName(model: UserModel): Promise<HandlerSuccess> {
     const find = await this.get(model.id);
     if (find.name != null) {
@@ -74,6 +99,35 @@ export default class UserService {
       }
     );
     return new HandlerSuccess('Nome atualizado com sucesso.');
+  }
+
+  public static async updatePassword(
+    password: IPassword,
+    id: string
+  ): Promise<HandlerSuccess> {
+    const find = await UserModel.findOne({
+      attributes: ['id', 'password'],
+      where: {
+        id: id,
+      },
+    });
+    if (!find) {
+      throw new HandlerError('Usuário não encontrado.', 403);
+    }
+    if (!this.decrypt(password.currentPassword, find.password)) {
+      throw new HandlerError('Senha atual inválida', 400);
+    }
+    await UserModel.update(
+      {
+        password: this.encrypt(password.newPassword),
+      },
+      {
+        where: {
+          id: find.id,
+        },
+      }
+    );
+    return new HandlerSuccess('Senha atualizada com sucesso');
   }
 
   public static async authenticate(
@@ -142,6 +196,25 @@ export default class UserService {
         authToken: authToken,
       },
     });
+  }
+
+  private static async validateUserLevel(model: UserModel): Promise<void> {
+    while (model.experience >= model.maximumExperience) {
+      const userUpdated = await UserModel.update(
+        {
+          experience: model.experience - model.maximumExperience,
+          level: sequelize.literal(`level + 1`),
+        },
+        {
+          where: {
+            id: model.id,
+          },
+          returning: true,
+        }
+      );
+      model.experience = userUpdated[1][0].get().experience;
+      model.maximumExperience = 50 * userUpdated[1][0].get().level;
+    }
   }
 
   private static encrypt(password: string): string {

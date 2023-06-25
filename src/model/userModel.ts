@@ -11,6 +11,7 @@ export default class UserModel extends Model {
   public banned!: Date | null;
   public level!: number;
   public experience!: number;
+  public maximumExperience!: number;
   public score!: number;
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;

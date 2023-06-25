@@ -65,4 +65,25 @@ export default class UserController {
       next(error);
     }
   }
+
+  public static async changePassword(
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ) {
+    logger.info(`Update user password ${request.user.id}`);
+    try {
+      const { currentPassword, newPassword } = request.body;
+      const handler = await UserService.updatePassword(
+        {
+          currentPassword,
+          newPassword,
+        },
+        request.user.id
+      );
+      return handler.toJSON(response);
+    } catch (error) {
+      next(error);
+    }
+  }
 }

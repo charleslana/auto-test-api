@@ -19,3 +19,7 @@ export const formatDate = (date: Date): string => {
     minute: '2-digit',
   });
 };
+
+export const randomNumber = (minimum: number, maximum: number): number => {
+  return Math.floor(Math.random() * (maximum - minimum + 1) + minimum);
+};

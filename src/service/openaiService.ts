@@ -2,8 +2,10 @@ import HandlerError from '../handler/handlerError';
 import IOpenai from '../interface/IOpenai';
 import UserHistoricModel from '../model/userHistoricModel';
 import UserHistoricService from './userHistoricService';
+import UserService from './userService';
 import { configuration } from '../utils/openai';
 import { OpenAIApi } from 'openai';
+import { randomNumber } from '../utils/utils';
 
 const openai = new OpenAIApi(configuration);
 
@@ -30,6 +32,18 @@ export default class OpenaiService {
         await UserHistoricService.save(model);
       } catch (error) {
         throw new HandlerError('Ocorreu um ao salvar o histórico', 503);
+      }
+      try {
+        await UserService.updateBounty(
+          userId,
+          randomNumber(5, 10),
+          randomNumber(50, 100)
+        );
+      } catch (error) {
+        throw new HandlerError(
+          'Ocorreu um ao salvar a experiência do usuário',
+          503
+        );
       }
       return {
         error: false,
