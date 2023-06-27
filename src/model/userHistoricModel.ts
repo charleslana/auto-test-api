@@ -1,10 +1,12 @@
+import TestTypeEnum from '../enum/testTypeEnum';
 import UserModel from './userModel';
 import { database } from './database';
 import { DataTypes, Model } from 'sequelize';
 
 export default class UserHistoricModel extends Model {
   public id!: string;
-  public content!: string | undefined;
+  public input!: string | undefined;
+  public type!: TestTypeEnum;
   public userId!: string;
 }
 
@@ -16,8 +18,12 @@ UserHistoricModel.init(
       allowNull: false,
       primaryKey: true,
     },
-    content: {
+    input: {
       type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    type: {
+      type: DataTypes.ENUM(...Object.values(TestTypeEnum)),
       allowNull: false,
     },
     userId: {

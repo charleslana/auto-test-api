@@ -1,3 +1,4 @@
+import ISendOpenai from '../interface/ISendOpenai';
 import logger from '../utils/logger';
 import OpenaiService from '../service/openaiService';
 import { NextFunction, Request, Response } from 'express';
@@ -8,14 +9,12 @@ export default class OpenaiController {
     response: Response,
     next: NextFunction
   ) {
-    logger.info(
-      `Send message from openai ${JSON.stringify(request.body.content)}`
-    );
+    logger.info(`Send message from openai ${JSON.stringify(request.body)}`);
     try {
-      const { content } = request.body;
+      const sendOpenai = request.body as ISendOpenai;
       return response
         .status(200)
-        .json(await OpenaiService.send(content, request.user.id));
+        .json(await OpenaiService.send(sendOpenai, request.user.id));
     } catch (error) {
       next(error);
     }

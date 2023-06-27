@@ -1,5 +1,6 @@
 import HandlerError from '../handler/handlerError';
 import IOpenai from '../interface/IOpenai';
+import ISendOpenai from '../interface/ISendOpenai';
 import UserHistoricModel from '../model/userHistoricModel';
 import UserHistoricService from './userHistoricService';
 import UserService from './userService';
@@ -10,7 +11,7 @@ import { randomNumber } from '../utils/utils';
 const openai = new OpenAIApi(configuration);
 
 export default class OpenaiService {
-  public static async send(content: string, userId: string): Promise<IOpenai> {
+  public static async send(i: ISendOpenai, userId: string): Promise<IOpenai> {
     try {
       const response = await openai.createChatCompletion({
         model: 'gpt-3.5-turbo',
@@ -18,23 +19,20 @@ export default class OpenaiService {
           {
             role: 'system',
             content:
-              'você é um analista de testes que trabalha para uma empresa de softwares',
+              'você é um analista de teste que trabalha para uma empresa de software',
           },
           {
             role: 'user',
-            content:
-              'crie até 3 casos de testes com passo a passo e resultado esperado para o requisito\nuse a tecnica de valores limitrofes ou outras tecnicas que julgar necessario para validar o sistema. Por favor, forneça-nos um trecho da documentação do software ou um requisito específico que deseja validar.\n\nContexto:\nEx.: Sistema de cartão de credito de um banco\n\nEntrada: Ex.: o cartão de credito deve ser bloqueado 5 dias após o vencimento da fatura se o cliente não pagar\nSaída:',
+            content: `crie até 3 casos de testes com passo a passo e resultado esperado para o requisito\nuse a técnica de valores limitrofes ou outras técnicas que julgar necessário para validar o sistema. Por favor, forneça-nos um trecho da documentação do software ou um requisito específico que deseja validar.\n\nContexto:\n${
+              i.context ?? ''
+            }\n\nEntrada: ${i.input}\nSaída:${i.output ?? ''}`,
           },
-          // {
-          //   role: 'user',
-          //   content:
-          //     'crie até 3 casos de testes com passo a passo e resultado esperado para o requisito\nuse a tecnica de valores limitrofes ou outras tecnicas que julgar necessario para validar o sistema. Por favor, forneça-nos um trecho da documentação do software ou um requisito específico que deseja validar.\n\nEntrada: Ex.: o cartão de credito deve ser bloqueado 5 dias após o vencimento da fatura se o cliente não pagar\nSaída:',
-          // },
         ],
       });
       const model = <UserHistoricModel>{};
       model.userId = userId;
-      model.content = response.data.choices[0].message?.content;
+      model.input = response.data.choices[0].message?.content;
+      model.type = i.type;
       try {
         await UserHistoricService.save(model);
       } catch (error) {
