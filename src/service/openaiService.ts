@@ -45,27 +45,12 @@ export default class OpenaiService {
           },
         ],
       });
-      const model = <UserHistoricModel>{};
-      model.userId = userId;
-      model.input = response.data.choices[0].message?.content;
-      model.type = i.type;
-      try {
-        await UserHistoricService.save(model);
-      } catch (error) {
-        throw new HandlerError('Ocorreu um ao salvar o histórico', 503);
-      }
-      try {
-        await UserService.updateBounty(
-          userId,
-          randomNumber(5, 10),
-          randomNumber(50, 100)
-        );
-      } catch (error) {
-        throw new HandlerError(
-          'Ocorreu um ao salvar a experiência do usuário',
-          503
-        );
-      }
+      await OpenaiService.saveHistoric(
+        userId,
+        response.data.choices[0].message?.content,
+        i
+      );
+      await OpenaiService.saveUserBounty(userId);
       return {
         error: false,
         message: response.data.choices[0].message?.content,
@@ -75,6 +60,37 @@ export default class OpenaiService {
         'Ocorreu um erro com o openai. Tente novamente',
         503
       );
+    }
+  }
+
+  private static async saveUserBounty(userId: string) {
+    try {
+      await UserService.updateBounty(
+        userId,
+        randomNumber(5, 10),
+        randomNumber(50, 100)
+      );
+    } catch (error) {
+      throw new HandlerError(
+        'Ocorreu um ao salvar a experiência do usuário',
+        503
+      );
+    }
+  }
+
+  private static async saveHistoric(
+    userId: string,
+    content: string | undefined,
+    i: ISendOpenai
+  ) {
+    const model = <UserHistoricModel>{};
+    model.userId = userId;
+    model.input = content;
+    model.type = i.type;
+    try {
+      await UserHistoricService.save(model);
+    } catch (error) {
+      throw new HandlerError('Ocorreu um ao salvar o histórico', 503);
     }
   }
 
