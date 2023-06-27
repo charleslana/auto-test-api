@@ -6,6 +6,7 @@ enum TestTypeEnum {
   QualityIndicator = 'qualityIndicator',
   TestTranslator = 'testTranslator',
   UsabilityTestCase = 'usabilityTestCase',
+  TestMassGenerator = 'testMassGenerator',
   GherkinLanguage = 'gherkinLanguage',
   SecurityTest = 'securityTest',
   PerformanceTest = 'performanceTest',

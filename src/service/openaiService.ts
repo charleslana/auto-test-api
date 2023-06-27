@@ -1,12 +1,28 @@
 import HandlerError from '../handler/handlerError';
 import IOpenai from '../interface/IOpenai';
 import ISendOpenai from '../interface/ISendOpenai';
+import TestTypeEnum from '../enum/testTypeEnum';
 import UserHistoricModel from '../model/userHistoricModel';
 import UserHistoricService from './userHistoricService';
 import UserService from './userService';
-import { configuration } from '../utils/openai';
 import { OpenAIApi } from 'openai';
 import { randomNumber } from '../utils/utils';
+import {
+  apiTest,
+  bugReport,
+  configuration,
+  gherkinLanguage,
+  performanceTest,
+  qualityIndicator,
+  securityTest,
+  sqlQueryBuilder,
+  stepGenerator,
+  testGenerator,
+  testMassGenerator,
+  testPlan,
+  testTranslator,
+  usabilityTestCase,
+} from '../utils/openai';
 
 const openai = new OpenAIApi(configuration);
 
@@ -23,7 +39,7 @@ export default class OpenaiService {
           },
           {
             role: 'user',
-            content: `crie até 3 casos de testes com passo a passo e resultado esperado para o requisito\nuse a técnica de valores limitrofes ou outras técnicas que julgar necessário para validar o sistema. Por favor, forneça-nos um trecho da documentação do software ou um requisito específico que deseja validar.\n\nContexto:\n${
+            content: `${this.getContent(i.type)}Contexto:\n${
               i.context ?? ''
             }\n\nEntrada: ${i.input}\nSaída:${i.output ?? ''}`,
           },
@@ -59,6 +75,39 @@ export default class OpenaiService {
         'Ocorreu um erro com o openai. Tente novamente',
         503
       );
+    }
+  }
+
+  private static getContent(type: TestTypeEnum): string {
+    switch (type) {
+      case TestTypeEnum.TestGenerator:
+        return testGenerator;
+      case TestTypeEnum.StepGenerator:
+        return stepGenerator;
+      case TestTypeEnum.BugReport:
+        return bugReport;
+      case TestTypeEnum.TestPlan:
+        return testPlan;
+      case TestTypeEnum.QualityIndicator:
+        return qualityIndicator;
+      case TestTypeEnum.TestTranslator:
+        return testTranslator;
+      case TestTypeEnum.UsabilityTestCase:
+        return usabilityTestCase;
+      case TestTypeEnum.TestMassGenerator:
+        return testMassGenerator;
+      case TestTypeEnum.GherkinLanguage:
+        return gherkinLanguage;
+      case TestTypeEnum.SecurityTest:
+        return securityTest;
+      case TestTypeEnum.PerformanceTest:
+        return performanceTest;
+      case TestTypeEnum.APITest:
+        return apiTest;
+      case TestTypeEnum.SQLQueryBuilder:
+        return sqlQueryBuilder;
+      default:
+        return testGenerator;
     }
   }
 }
