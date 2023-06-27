@@ -1,4 +1,5 @@
 import HandlerError from '../handler/handlerError';
+import IHistoric from '../interface/IHistoric';
 import UserHistoricModel from '../model/userHistoricModel';
 import { Optional } from 'sequelize';
 
@@ -23,11 +24,35 @@ export default class UserHistoricService {
     return find;
   }
 
-  public static async getAll(userId: string): Promise<UserHistoricModel[]> {
-    return await UserHistoricModel.findAll({
+  public static async getPaginated(
+    page: number,
+    pageSize: number,
+    userId: string
+  ): Promise<IHistoric> {
+    const offset = (page - 1) * pageSize;
+    const limit = pageSize;
+    const findAll = await UserHistoricModel.findAndCountAll({
+      offset,
+      limit,
       where: {
         userId: userId,
       },
+      order: [
+        ['id', 'DESC'],
+        ['created_at', 'DESC'],
+      ],
     });
+    const totalPages = Math.ceil(findAll.count / pageSize);
+    if (page > totalPages) {
+      throw new HandlerError('Nenhum resultado foi encontrado.', 400);
+    }
+    const hasNextPage = page < totalPages;
+    return {
+      results: findAll.rows,
+      totalCount: findAll.count,
+      totalPages: totalPages,
+      currentPage: page,
+      hasNextPage: hasNextPage,
+    };
   }
 }

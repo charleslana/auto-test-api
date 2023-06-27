@@ -19,16 +19,25 @@ export default class UserHistoricController {
     }
   }
 
-  public static async findAll(
+  public static async findPaginated(
     request: Request,
     response: Response,
     next: NextFunction
   ) {
-    logger.info(`Get all user historic with user ${request.user.id}`);
+    logger.info(
+      `Get paginate user historic with user ${request.user.id} page ${request.query.page}`
+    );
     try {
+      const { page } = request.query;
       return response
         .status(200)
-        .json(await UserHistoricService.getAll(request.user.id));
+        .json(
+          await UserHistoricService.getPaginated(
+            page != undefined ? +page : 1,
+            10,
+            request.user.id
+          )
+        );
     } catch (error) {
       next(error);
     }
