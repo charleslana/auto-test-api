@@ -29,7 +29,15 @@ export const userUpdateNameMiddleware = () => {
           .trim()
           .min(3)
           .max(20)
-          .required(),
+          .required()
+          .messages({
+            'string.pattern.base':
+              'o campo {{#label}} com o valor {:[.]} deve conter apenas letras, números ou o caractere underline',
+            'string.min':
+              'O tamanho do texto de {{#label}} deve ter pelo menos {{#limit}} caracteres',
+            'string.max':
+              '{{#label}} tamanho do texto deve ser menor ou igual a {{#limit}} caracteres',
+          }),
       },
     },
     { abortEarly: false }

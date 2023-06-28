@@ -1,6 +1,11 @@
 import UserRoleModel from './userRoleModel';
 import { database } from './database';
-import { DataTypes, HasManyGetAssociationsMixin, Model } from 'sequelize';
+import {
+  DataTypes,
+  HasManyGetAssociationsMixin,
+  Model,
+  Sequelize,
+} from 'sequelize';
 
 export default class UserModel extends Model {
   public id!: string;
@@ -13,8 +18,8 @@ export default class UserModel extends Model {
   public experience!: number;
   public maximumExperience!: number;
   public score!: number;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  public createdAt!: Date;
+  public updatedAt!: Date;
   public readonly roles!: UserRoleModel[];
   public getRoles!: HasManyGetAssociationsMixin<UserRoleModel>;
 }
@@ -68,13 +73,23 @@ UserModel.init(
       allowNull: false,
       defaultValue: 0,
     },
+    createdAt: {
+      type: DataTypes.DATE,
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      field: 'created_at',
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      field: 'updated_at',
+    },
   },
   {
     sequelize: database,
     tableName: 'tb_user',
     freezeTableName: true,
-    createdAt: 'created_at',
-    updatedAt: 'updated_at',
+    timestamps: true,
+    updatedAt: true,
   }
 );
 

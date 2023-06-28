@@ -29,6 +29,9 @@ const openai = new OpenAIApi(configuration);
 export default class OpenaiService {
   public static async send(i: ISendOpenai, userId: string): Promise<IOpenai> {
     try {
+      const input = `Contexto:\n${i.context ?? ''}\n\nEntrada: ${
+        i.input
+      }\nSaída:${i.output ?? ''}`;
       const response = await openai.createChatCompletion({
         model: 'gpt-3.5-turbo',
         messages: [
@@ -39,14 +42,13 @@ export default class OpenaiService {
           },
           {
             role: 'user',
-            content: `${this.getContent(i.type)}Contexto:\n${
-              i.context ?? ''
-            }\n\nEntrada: ${i.input}\nSaída:${i.output ?? ''}`,
+            content: `${this.getContent(i.type)}${input}`,
           },
         ],
       });
       await OpenaiService.saveHistoric(
         userId,
+        input,
         response.data.choices[0].message?.content,
         i
       );
@@ -80,12 +82,14 @@ export default class OpenaiService {
 
   private static async saveHistoric(
     userId: string,
-    content: string | undefined,
+    input: string,
+    output: string | undefined,
     i: ISendOpenai
   ) {
     const model = <UserHistoricModel>{};
     model.userId = userId;
-    model.input = content;
+    model.input = input;
+    model.output = output;
     model.type = i.type;
     try {
       await UserHistoricService.save(model);

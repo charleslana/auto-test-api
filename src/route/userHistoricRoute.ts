@@ -4,9 +4,9 @@ import UserHistoricController from '../controller/userHistoricController';
 import { idParamMiddleware } from '../middleware/celebrate/commonCelebrate';
 import { userHistoricPageMiddleware } from '../middleware/celebrate/userHistoricCelebrate';
 
-const userHIstoricRoute = express.Router();
+const userHistoricRoute = express.Router();
 
-userHIstoricRoute
+userHistoricRoute
   .route('/:id')
   .get(
     idParamMiddleware(),
@@ -14,7 +14,7 @@ userHIstoricRoute
     UserHistoricController.find
   );
 
-userHIstoricRoute
+userHistoricRoute
   .route('/')
   .get(
     userHistoricPageMiddleware(),
@@ -22,4 +22,12 @@ userHIstoricRoute
     UserHistoricController.findPaginated
   );
 
-export default userHIstoricRoute;
+userHistoricRoute
+  .route('/:id')
+  .delete(
+    idParamMiddleware(),
+    authenticateMiddleware,
+    UserHistoricController.delete
+  );
+
+export default userHistoricRoute;

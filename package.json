@@ -25,6 +25,7 @@
     "jsonwebtoken": "^9.0.0",
     "openai": "^3.3.0",
     "pg": "^8.11.0",
+    "sanitize-html": "^2.11.0",
     "sequelize": "^6.31.1",
     "winston": "^3.8.2"
   },
@@ -35,6 +36,7 @@
     "@types/express": "^4.17.17",
     "@types/joi": "^17.2.3",
     "@types/jsonwebtoken": "^9.0.2",
+    "@types/sanitize-html": "^2.9.0",
     "@typescript-eslint/eslint-plugin": "^5.59.11",
     "@typescript-eslint/parser": "^5.59.11",
     "eslint": "^8.43.0",

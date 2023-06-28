@@ -1,3 +1,4 @@
+import TestTypeEnum from '../../enum/testTypeEnum';
 import { celebrate, Joi, Segments } from 'celebrate';
 
 export const userHistoricPageMiddleware = () => {
@@ -5,6 +6,7 @@ export const userHistoricPageMiddleware = () => {
     {
       [Segments.QUERY]: {
         page: Joi.number().min(1).required(),
+        filterType: Joi.string().valid(...Object.values(TestTypeEnum)),
       },
     },
     { abortEarly: false }

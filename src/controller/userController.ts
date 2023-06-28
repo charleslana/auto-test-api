@@ -9,7 +9,7 @@ export default class UserController {
     response: Response,
     next: NextFunction
   ) {
-    logger.info(`Create user ${JSON.stringify(request.body)}`);
+    logger.info(`Create user ${JSON.stringify(request.body.email)}`);
     try {
       const user = request.body as UserModel;
       const handler = await UserService.save(user);

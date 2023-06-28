@@ -8,5 +8,8 @@ export const database = new Sequelize(
     dialect: 'postgres',
     host: process.env.DATABASE_HOST,
     port: +(process.env.DATABASE_PORT as string),
+    dialectOptions: {
+      timezone: 'America/Sao_Paulo',
+    },
   }
 );

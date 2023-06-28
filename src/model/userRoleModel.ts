@@ -1,12 +1,14 @@
 import UserModel from './userModel';
 import UserRoleEnum from '../enum/userRoleEnum';
 import { database } from './database';
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes, Model, Sequelize } from 'sequelize';
 
 export default class UserRoleModel extends Model {
   public id!: string;
   public name!: UserRoleEnum;
   public userId!: string;
+  public createdAt!: Date;
+  public updatedAt!: Date;
 }
 
 UserRoleModel.init(
@@ -31,12 +33,22 @@ UserRoleModel.init(
       },
       field: 'user_id',
     },
+    createdAt: {
+      type: DataTypes.DATE,
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      field: 'created_at',
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      field: 'updated_at',
+    },
   },
   {
     sequelize: database,
     tableName: 'tb_user_role',
     freezeTableName: true,
-    createdAt: 'created_at',
-    updatedAt: 'updated_at',
+    timestamps: true,
+    updatedAt: true,
   }
 );
