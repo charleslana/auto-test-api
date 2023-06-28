@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint . --ext .ts",
+    "lint-fix": "eslint . --ext .ts --fix",
     "dev": "nodemon -r dotenv/config ./src/server.ts",
     "build": "tsc",
     "start": "rm -rf dist && npm run build && node -r dotenv/config ./dist/server.js"
