@@ -277,6 +277,24 @@ export default class UserService {
     };
   }
 
+  public static async getProfile(id: string): Promise<UserModel> {
+    const find = await UserModel.findByPk(id, {
+      attributes: {
+        exclude: [
+          'email',
+          'password',
+          'authToken',
+          'maximumExperience',
+          'banned',
+        ],
+      },
+    });
+    if (!find) {
+      throw new HandlerError('Usuário não encontrado.', 404);
+    }
+    return find;
+  }
+
   private static async validateUserLevel(model: UserModel): Promise<void> {
     while (model.experience >= model.maximumExperience) {
       const userUpdated = await UserModel.update(

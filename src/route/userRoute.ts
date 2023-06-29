@@ -1,6 +1,7 @@
 import authenticateMiddleware from '../middleware/authenticateMiddleware';
 import express from 'express';
 import UserController from '../controller/userController';
+import { idParamMiddleware } from '../middleware/celebrate/commonCelebrate';
 import {
   userCreateMiddleware,
   userLoginMiddleware,
@@ -15,7 +16,9 @@ userRoute.route('/').post(userCreateMiddleware(), UserController.create);
 
 userRoute.route('/auth').post(userLoginMiddleware(), UserController.auth);
 
-userRoute.route('/details').get(authenticateMiddleware, UserController.find);
+userRoute
+  .route('/details')
+  .get(authenticateMiddleware, UserController.getDetails);
 
 userRoute
   .route('/change-name')
@@ -40,5 +43,9 @@ userRoute
     authenticateMiddleware,
     UserController.findPaginated
   );
+
+userRoute
+  .route('/profile/:id')
+  .get(idParamMiddleware(), authenticateMiddleware, UserController.getProfile);
 
 export default userRoute;

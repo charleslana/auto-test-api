@@ -38,7 +38,7 @@ export default class UserController {
     }
   }
 
-  public static async find(
+  public static async getDetails(
     request: Request,
     response: Response,
     next: NextFunction
@@ -106,6 +106,20 @@ export default class UserController {
           filterType: filterType as UserRankEnum,
         })
       );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  public static async getProfile(
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ) {
+    logger.info(`Get user profile with id ${request.params.id}`);
+    try {
+      const { id } = request.params;
+      return response.status(200).json(await UserService.getProfile(id));
     } catch (error) {
       next(error);
     }
