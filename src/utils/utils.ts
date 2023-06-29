@@ -23,3 +23,7 @@ export const formatDate = (date: Date): string => {
 export const randomNumber = (minimum: number, maximum: number): number => {
   return Math.floor(Math.random() * (maximum - minimum + 1) + minimum);
 };
+
+export const formatNumber = (number: number): string => {
+  return number.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+};

@@ -10,7 +10,7 @@ import sequelize, { Optional, OrderItem, WhereOptions } from 'sequelize';
 import UserModel from '../model/userModel';
 import UserRankEnum from '../enum/userRankEnum';
 import UserRoleModel from '../model/userRoleModel';
-import { formatDate, randomString } from '../utils/utils';
+import { formatDate, formatNumber, randomString } from '../utils/utils';
 
 export default class UserService {
   public static async save(model: UserModel): Promise<HandlerSuccess> {
@@ -75,19 +75,7 @@ export default class UserService {
     if (find.name != null) {
       throw new HandlerError('Você já atualizou seu nome.', 400);
     }
-    const exist = await UserModel.findOne({
-      where: sequelize.where(
-        sequelize.fn('lower', sequelize.col('name')),
-        sequelize.fn('lower', model.name)
-      ),
-    });
-    if (
-      exist &&
-      exist.name?.toLowerCase() === model.name?.toLowerCase() &&
-      exist.id !== model.id
-    ) {
-      throw new HandlerError('Nome já cadastrado.', 400);
-    }
+    await UserService.validateExistUserName(model);
     await UserModel.update(
       {
         name: model.name,
@@ -100,7 +88,6 @@ export default class UserService {
     );
     return new HandlerSuccess('Nome atualizado com sucesso.');
   }
-
   public static async updatePassword(
     password: IPassword,
     id: string
@@ -293,6 +280,50 @@ export default class UserService {
       throw new HandlerError('Usuário não encontrado.', 404);
     }
     return find;
+  }
+
+  public static async buyNameChange(model: UserModel) {
+    const find = await this.get(model.id);
+    const scorePrice = 1000;
+    if (find.score <= scorePrice) {
+      throw new HandlerError(
+        `Você não possui a quantidade suficiente para trocar o nome, necessário ${formatNumber(
+          scorePrice
+        )} score.`,
+        400
+      );
+    }
+    await UserService.validateExistUserName(model);
+    if (find.name != model.name) {
+      await UserModel.update(
+        {
+          name: model.name,
+          score: sequelize.literal(`score - ${scorePrice}`),
+        },
+        {
+          where: {
+            id: model.id,
+          },
+        }
+      );
+    }
+    return new HandlerSuccess('Nome atualizado com sucesso.');
+  }
+
+  private static async validateExistUserName(model: UserModel) {
+    const exist = await UserModel.findOne({
+      where: sequelize.where(
+        sequelize.fn('lower', sequelize.col('name')),
+        sequelize.fn('lower', model.name)
+      ),
+    });
+    if (
+      exist &&
+      exist.name?.toLowerCase() === model.name?.toLowerCase() &&
+      exist.id !== model.id
+    ) {
+      throw new HandlerError('Nome já cadastrado.', 400);
+    }
   }
 
   private static async validateUserLevel(model: UserModel): Promise<void> {

@@ -48,4 +48,12 @@ userRoute
   .route('/profile/:id')
   .get(idParamMiddleware(), authenticateMiddleware, UserController.getProfile);
 
+userRoute
+  .route('/buy-name')
+  .put(
+    userUpdateNameMiddleware(),
+    authenticateMiddleware,
+    UserController.buyNameChange
+  );
+
 export default userRoute;

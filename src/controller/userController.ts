@@ -25,7 +25,7 @@ export default class UserController {
     response: Response,
     next: NextFunction
   ) {
-    logger.info(`Update user name with ${JSON.stringify(request.body)}`);
+    logger.info(`Update user name with ${JSON.stringify(request.body.name)}`);
     try {
       const { name } = request.body;
       const model = <UserModel>{};
@@ -120,6 +120,26 @@ export default class UserController {
     try {
       const { id } = request.params;
       return response.status(200).json(await UserService.getProfile(id));
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  public static async buyNameChange(
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ) {
+    logger.info(
+      `Buy user name change with name ${JSON.stringify(request.body.name)}`
+    );
+    try {
+      const { name } = request.body;
+      const model = <UserModel>{};
+      model.id = request.user.id;
+      model.name = name;
+      const handler = await UserService.buyNameChange(model);
+      return handler.toJSON(response);
     } catch (error) {
       next(error);
     }
