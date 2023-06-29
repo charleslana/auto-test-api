@@ -285,7 +285,7 @@ export default class UserService {
   public static async buyNameChange(model: UserModel) {
     const find = await this.get(model.id);
     const scorePrice = 1000;
-    if (find.score <= scorePrice) {
+    if (find.score < scorePrice) {
       throw new HandlerError(
         `Você não possui a quantidade suficiente para trocar o nome, necessário ${formatNumber(
           scorePrice
