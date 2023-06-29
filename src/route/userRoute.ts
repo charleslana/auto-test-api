@@ -4,6 +4,7 @@ import UserController from '../controller/userController';
 import {
   userCreateMiddleware,
   userLoginMiddleware,
+  userPageMiddleware,
   userPasswordMiddleware,
   userUpdateNameMiddleware,
 } from '../middleware/celebrate/userCelebrate';
@@ -30,6 +31,14 @@ userRoute
     userPasswordMiddleware(),
     authenticateMiddleware,
     UserController.changePassword
+  );
+
+userRoute
+  .route('/')
+  .get(
+    userPageMiddleware(),
+    authenticateMiddleware,
+    UserController.findPaginated
   );
 
 export default userRoute;

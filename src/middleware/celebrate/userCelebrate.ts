@@ -1,3 +1,4 @@
+import UserRankEnum from '../../enum/userRankEnum';
 import { celebrate, Joi, Segments } from 'celebrate';
 
 export const userCreateMiddleware = () => {
@@ -68,6 +69,18 @@ export const userPasswordMiddleware = () => {
             is: Joi.exist(),
             then: Joi.required(),
           }),
+      },
+    },
+    { abortEarly: false }
+  );
+};
+
+export const userPageMiddleware = () => {
+  return celebrate(
+    {
+      [Segments.QUERY]: {
+        page: Joi.number().min(1),
+        filterType: Joi.string().valid(...Object.values(UserRankEnum)),
       },
     },
     { abortEarly: false }

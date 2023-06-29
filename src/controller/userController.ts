@@ -1,5 +1,6 @@
 import logger from '../utils/logger';
 import UserModel from '../model/userModel';
+import UserRankEnum from '../enum/userRankEnum';
 import UserService from '../service/userService';
 import { NextFunction, Request, Response } from 'express';
 
@@ -82,6 +83,29 @@ export default class UserController {
         request.user.id
       );
       return handler.toJSON(response);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  public static async findPaginated(
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ) {
+    logger.info(
+      `Get paginate user ${request.user.id} page ${request.query.page}`
+    );
+    try {
+      const { page, filterType } = request.query;
+      return response.status(200).json(
+        await UserService.getRankAndUserList({
+          page: page != undefined ? +page : 1,
+          pageSize: 10,
+          id: request.user.id,
+          filterType: filterType as UserRankEnum,
+        })
+      );
     } catch (error) {
       next(error);
     }

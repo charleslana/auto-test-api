@@ -2,10 +2,13 @@ import bcrypt from 'bcrypt';
 import HandlerError from '../handler/handlerError';
 import HandlerSuccess from '../handler/handlerSuccess';
 import IPassword from '../interface/IPassword';
+import IRankAndUserList from '../interface/IRankAndUserList';
 import IUserAuthenticate from '../interface/IUserAuthenticate';
+import IUserPaginated from '../interface/IUserPaginated';
 import jwt from 'jsonwebtoken';
-import sequelize, { Optional } from 'sequelize';
+import sequelize, { Optional, OrderItem, WhereOptions } from 'sequelize';
 import UserModel from '../model/userModel';
+import UserRankEnum from '../enum/userRankEnum';
 import UserRoleModel from '../model/userRoleModel';
 import { formatDate, randomString } from '../utils/utils';
 
@@ -51,10 +54,7 @@ export default class UserService {
     experience: number,
     score: number
   ): Promise<void> {
-    const find = await this.get(id);
-    if (!find) {
-      throw new HandlerError('Usuário não encontrado.', 400);
-    }
+    await this.get(id);
     const userUpdated = await UserModel.update(
       {
         experience: sequelize.literal(`experience + ${experience}`),
@@ -196,6 +196,85 @@ export default class UserService {
         authToken: authToken,
       },
     });
+  }
+
+  public static async getRankAndUserList(
+    i: IUserPaginated
+  ): Promise<IRankAndUserList> {
+    const find = await this.get(i.id);
+    let userRank = 'Nenhuma classificação';
+    let whereOptions: WhereOptions = {
+      [sequelize.Op.or]: [
+        { level: { [sequelize.Op.gt]: find.level } },
+        {
+          [sequelize.Op.and]: [
+            { level: find.level },
+            { id: { [sequelize.Op.lt]: find.id } },
+          ],
+        },
+      ],
+      name: {
+        [sequelize.Op.ne]: null,
+      },
+    };
+    let orderBy: OrderItem = ['level', 'DESC'];
+    if (i.filterType == UserRankEnum.Score) {
+      whereOptions = {
+        [sequelize.Op.or]: [
+          { score: { [sequelize.Op.gt]: find.score } },
+          {
+            [sequelize.Op.and]: [
+              { score: find.score },
+              { id: { [sequelize.Op.lt]: find.id } },
+            ],
+          },
+        ],
+        name: {
+          [sequelize.Op.ne]: null,
+        },
+      };
+      orderBy = ['score', 'DESC'];
+    }
+    if (find.name) {
+      const rank = await UserModel.count({
+        where: whereOptions,
+      });
+      userRank = (rank + 1).toString();
+    }
+    const offset = (i.page - 1) * i.pageSize;
+    const limit = i.pageSize;
+    const findAll = await UserModel.findAndCountAll({
+      offset,
+      limit,
+      where: {
+        name: {
+          [sequelize.Op.ne]: null,
+        },
+      },
+      attributes: {
+        exclude: [
+          'email',
+          'password',
+          'authToken',
+          'maximumExperience',
+          'banned',
+        ],
+      },
+      order: [orderBy, ['id', 'ASC']],
+    });
+    const totalPages = Math.ceil(findAll.count / i.pageSize);
+    if (i.page > totalPages) {
+      throw new HandlerError('Nenhum resultado foi encontrado.', 400);
+    }
+    const hasNextPage = i.page < totalPages;
+    return {
+      results: findAll.rows,
+      rank: userRank,
+      totalCount: findAll.count,
+      totalPages: totalPages,
+      currentPage: i.page,
+      hasNextPage: hasNextPage,
+    };
   }
 
   private static async validateUserLevel(model: UserModel): Promise<void> {
