@@ -3,7 +3,7 @@ import express from 'express';
 import OpenaiController from '../controller/openaiController';
 import {
   openaiSendMiddleware,
-  escapeTagsHTMLMiddleware,
+  escapeOpenaiHTMLMiddleware,
 } from '../middleware/celebrate/openaiCelebrate';
 
 const openaiRoute = express.Router();
@@ -12,7 +12,7 @@ openaiRoute
   .route('/')
   .post(
     openaiSendMiddleware(),
-    escapeTagsHTMLMiddleware,
+    escapeOpenaiHTMLMiddleware,
     authenticateMiddleware,
     OpenaiController.send
   );

@@ -1,6 +1,6 @@
-import sanitizeHtml from 'sanitize-html';
 import TestTypeEnum from '../../enum/testTypeEnum';
 import { celebrate, Joi, Segments } from 'celebrate';
+import { escapeTagsHTML } from './commonCelebrate';
 import { NextFunction, Request, Response } from 'express';
 
 export const openaiSendMiddleware = () => {
@@ -28,14 +28,7 @@ export const openaiSendMiddleware = () => {
   );
 };
 
-function escapeTagsHTML(input: string): string {
-  return sanitizeHtml(input, {
-    allowedTags: [],
-    allowedAttributes: {},
-  });
-}
-
-export function escapeTagsHTMLMiddleware(
+export function escapeOpenaiHTMLMiddleware(
   request: Request,
   _response: Response,
   next: NextFunction

@@ -6,7 +6,7 @@ import IRankAndUserList from '../interface/IRankAndUserList';
 import IUserAuthenticate from '../interface/IUserAuthenticate';
 import IUserPaginated from '../interface/IUserPaginated';
 import jwt from 'jsonwebtoken';
-import sequelize, { Optional, OrderItem, WhereOptions } from 'sequelize';
+import sequelize, { Op, Optional, OrderItem, WhereOptions } from 'sequelize';
 import UserModel from '../model/userModel';
 import UserRankEnum from '../enum/userRankEnum';
 import UserRoleModel from '../model/userRoleModel';
@@ -55,7 +55,7 @@ export default class UserService {
     score: number
   ): Promise<void> {
     await this.get(id);
-    const userUpdated = await UserModel.update(
+    const [, [updatedUser]] = await UserModel.update(
       {
         experience: sequelize.literal(`experience + ${experience}`),
         score: sequelize.literal(`score + ${score}`),
@@ -67,7 +67,9 @@ export default class UserService {
         returning: true,
       }
     );
-    await this.validateUserLevel(userUpdated[1][0].get());
+    if (updatedUser) {
+      await this.validateUserLevel(updatedUser);
+    }
   }
 
   public static async updateName(model: UserModel): Promise<HandlerSuccess> {
@@ -310,39 +312,52 @@ export default class UserService {
     return new HandlerSuccess('Nome atualizado com sucesso.');
   }
 
+  public static async reduceScore(id: string, score: number): Promise<void> {
+    await UserModel.update(
+      {
+        score: sequelize.literal(`score - ${score}`),
+      },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+  }
+
   private static async validateExistUserName(model: UserModel) {
     const exist = await UserModel.findOne({
-      where: sequelize.where(
-        sequelize.fn('lower', sequelize.col('name')),
-        sequelize.fn('lower', model.name)
-      ),
+      where: {
+        name: sequelize.where(
+          sequelize.fn('lower', sequelize.col('name')),
+          sequelize.fn('lower', model.name)
+        ),
+        id: {
+          [Op.not]: model.id,
+        },
+      },
     });
-    if (
-      exist &&
-      exist.name?.toLowerCase() === model.name?.toLowerCase() &&
-      exist.id !== model.id
-    ) {
+    if (exist) {
       throw new HandlerError('Nome já cadastrado.', 400);
     }
   }
 
   private static async validateUserLevel(model: UserModel): Promise<void> {
-    while (model.experience >= model.maximumExperience) {
-      const userUpdated = await UserModel.update(
-        {
-          experience: model.experience - model.maximumExperience,
-          level: sequelize.literal(`level + 1`),
-        },
-        {
-          where: {
-            id: model.id,
-          },
-          returning: true,
-        }
+    let { experience, maximumExperience, level } = model;
+    while (experience >= maximumExperience) {
+      const experienceToSubtract = maximumExperience;
+      const newLevel = level + 1;
+      experience -= experienceToSubtract;
+      level = newLevel;
+      const [, [updatedUser]] = await UserModel.update(
+        { experience, level },
+        { where: { id: model.id }, returning: true }
       );
-      model.experience = userUpdated[1][0].get().experience;
-      model.maximumExperience = 50 * userUpdated[1][0].get().level;
+      maximumExperience = 50 * updatedUser.level;
     }
+    model.experience = experience;
+    model.maximumExperience = maximumExperience;
+    model.level = level;
   }
 
   private static encrypt(password: string): string {

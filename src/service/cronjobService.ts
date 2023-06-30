@@ -1,13 +1,17 @@
+import UserItemService from './userItemService';
 import { CronJob } from 'cron';
 
 export default class CronJobService {
   public static start() {
-    this.firstJob();
+    this.deleteExpiredItemsJob();
     this.secondJob();
   }
 
-  private static firstJob() {
-    new CronJob('0 */1 * * * *', async () => console.log('event 1')).start();
+  private static deleteExpiredItemsJob() {
+    new CronJob('0 */1 * * * *', async () => {
+      console.log('delete expired items');
+      UserItemService.deleteExpiredItems();
+    }).start();
   }
 
   private static secondJob() {

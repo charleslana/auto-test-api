@@ -6,9 +6,13 @@
   "scripts": {
     "lint": "eslint . --ext .ts",
     "lint-fix": "eslint . --ext .ts --fix",
-    "dev": "nodemon -r dotenv/config ./src/server.ts",
+    "dev": "TS_NODE_PROJECT=./tsconfig.json TZ=America/Sao_Paulo node -r dotenv/config ./node_modules/.bin/ts-node-dev --respawn --transpile-only ./src/server.ts",
     "build": "tsc",
-    "start": "rm -rf dist && npm run build && node -r dotenv/config ./dist/server.js"
+    "start": "rm -rf dist && npm run build && node -r dotenv/config ./dist/src/server.js",
+    "migrate:up": "npx sequelize-cli db:migrate",
+    "migrate:down": "npx sequelize-cli db:migrate:undo",
+    "migrate:down-all": "npx sequelize-cli db:migrate:undo:all",
+    "migrate:seed": "npx sequelize-cli db:seed:all"
   },
   "keywords": [],
   "author": "",
@@ -42,8 +46,8 @@
     "eslint": "^8.43.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "nodemon": "^2.0.22",
     "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.0.4"
   }
 }
