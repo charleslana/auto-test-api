@@ -3,7 +3,6 @@ import HandlerSuccess from '../handler/handlerSuccess';
 import ItemModel from '../model/itemModel';
 import ItemService from './itemService';
 import UserItemModel from '../model/userItemModel';
-import UserService from './userService';
 import { Op } from 'sequelize';
 
 export default class UserItemService {
@@ -11,7 +10,6 @@ export default class UserItemService {
     itemId: string,
     userId: string
   ): Promise<HandlerSuccess> {
-    await UserService.get(userId);
     const item = await ItemService.getItemById(itemId);
     await this.existUserItemByUserId(itemId, userId);
     let expirationDate: Date | null = null;

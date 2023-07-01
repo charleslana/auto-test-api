@@ -3,21 +3,6 @@ import UserItemService from '../service/userItemService';
 import { NextFunction, Request, Response } from 'express';
 
 export default class UserItemController {
-  public static async create(
-    request: Request,
-    response: Response,
-    next: NextFunction
-  ) {
-    logger.info(`Create user item ${JSON.stringify(request.body)}`);
-    try {
-      const { userId, itemId } = request.body;
-      const handler = await UserItemService.save(itemId, userId);
-      return handler.toJSON(response);
-    } catch (error) {
-      next(error);
-    }
-  }
-
   public static async findAll(
     request: Request,
     response: Response,
