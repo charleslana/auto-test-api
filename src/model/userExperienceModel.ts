@@ -1,3 +1,4 @@
+import TestTypeEnum from '../enum/testTypeEnum';
 import UserModel from './userModel';
 import { database } from './database';
 import { DataTypes, Model, Sequelize } from 'sequelize';
@@ -5,6 +6,7 @@ import { DataTypes, Model, Sequelize } from 'sequelize';
 export default class UserExperienceModel extends Model {
   public id!: string;
   public experience!: number;
+  public type!: TestTypeEnum;
   public userId!: string;
   public createdAt!: Date;
   public updatedAt!: Date;
@@ -20,6 +22,10 @@ UserExperienceModel.init(
     },
     experience: {
       type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    type: {
+      type: DataTypes.ENUM(...Object.values(TestTypeEnum)),
       allowNull: false,
     },
     userId: {
