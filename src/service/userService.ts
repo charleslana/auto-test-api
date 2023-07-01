@@ -7,6 +7,7 @@ import IUserAuthenticate from '../interface/IUserAuthenticate';
 import IUserPaginated from '../interface/IUserPaginated';
 import jwt from 'jsonwebtoken';
 import sequelize, { Op, Optional, OrderItem, WhereOptions } from 'sequelize';
+import UserItemService from './userItemService';
 import UserModel from '../model/userModel';
 import UserRankEnum from '../enum/userRankEnum';
 import UserRoleModel from '../model/userRoleModel';
@@ -24,7 +25,11 @@ export default class UserService {
       throw new HandlerError('E-mail já cadastrado.');
     }
     model.password = this.encrypt(model.password as string);
-    await UserModel.create(model as Optional<unknown, never>);
+    const user = await UserModel.create(model as Optional<unknown, never>);
+    const itemIds = ['1', '2', '3'];
+    for (const itemId of itemIds) {
+      await UserItemService.save(itemId, user.id);
+    }
     return new HandlerSuccess('Usuário criado com sucesso.', 201);
   }
 
