@@ -2,6 +2,8 @@ import HandlerError from '../handler/handlerError';
 import IOpenai from '../interface/IOpenai';
 import ISendOpenai from '../interface/ISendOpenai';
 import TestTypeEnum from '../enum/testTypeEnum';
+import UserExperienceModel from '../model/userExperienceModel';
+import UserExperienceService from './userExperienceService';
 import UserHistoricModel from '../model/userHistoricModel';
 import UserHistoricService from './userHistoricService';
 import UserService from './userService';
@@ -46,13 +48,14 @@ export default class OpenaiService {
           },
         ],
       });
-      await OpenaiService.saveHistoric(
+      await this.saveHistoric(
         userId,
         input,
         response.data.choices[0].message?.content,
         i
       );
-      await OpenaiService.saveUserBounty(userId);
+      const experience = await this.saveUserBounty(userId);
+      await this.saveExperience(userId, experience, i.type);
       return {
         error: false,
         message: response.data.choices[0].message?.content,
@@ -65,19 +68,10 @@ export default class OpenaiService {
     }
   }
 
-  private static async saveUserBounty(userId: string) {
-    try {
-      await UserService.updateBounty(
-        userId,
-        randomNumber(5, 10),
-        randomNumber(50, 100)
-      );
-    } catch (error) {
-      throw new HandlerError(
-        'Ocorreu um ao salvar a experiência do usuário',
-        503
-      );
-    }
+  private static async saveUserBounty(userId: string): Promise<number> {
+    const experience = randomNumber(5, 10);
+    await UserService.updateBounty(userId, experience, randomNumber(50, 100));
+    return experience;
   }
 
   private static async saveHistoric(
@@ -85,17 +79,25 @@ export default class OpenaiService {
     input: string,
     output: string | undefined,
     i: ISendOpenai
-  ) {
+  ): Promise<void> {
     const model = <UserHistoricModel>{};
     model.userId = userId;
     model.input = input;
     model.output = output;
     model.type = i.type;
-    try {
-      await UserHistoricService.save(model);
-    } catch (error) {
-      throw new HandlerError('Ocorreu um ao salvar o histórico', 503);
-    }
+    await UserHistoricService.save(model);
+  }
+
+  private static async saveExperience(
+    userId: string,
+    experience: number,
+    type: TestTypeEnum
+  ): Promise<void> {
+    const model = <UserExperienceModel>{};
+    model.userId = userId;
+    model.experience = experience;
+    model.type = type;
+    await UserExperienceService.save(model);
   }
 
   private static getContent(type: TestTypeEnum): string {
