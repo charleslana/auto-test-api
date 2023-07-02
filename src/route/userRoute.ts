@@ -1,6 +1,7 @@
 import authenticateMiddleware from '../middleware/authenticateMiddleware';
 import express from 'express';
 import UserController from '../controller/userController';
+import UserExperienceController from '../controller/userExperienceController';
 import { idParamMiddleware } from '../middleware/celebrate/commonCelebrate';
 import {
   userCreateMiddleware,
@@ -54,6 +55,13 @@ userRoute
     userUpdateNameMiddleware(),
     authenticateMiddleware,
     UserController.buyNameChange
+  );
+
+userRoute
+  .route('/experience')
+  .get(
+    authenticateMiddleware,
+    UserExperienceController.getExperienceCountByType
   );
 
 export default userRoute;
