@@ -31,4 +31,22 @@ export default class UserExperienceService {
     });
     return experienceCounts as IUserExperience;
   }
+
+  public static async getCountByType(userId: string): Promise<IUserExperience> {
+    const results = await UserExperienceModel.findAll({
+      attributes: [
+        'type',
+        [Sequelize.fn('COUNT', Sequelize.col('id')), 'count'],
+      ],
+      where: { userId: userId },
+      group: ['type'],
+    });
+    const experienceCounts: Partial<IUserExperience> = {};
+    Object.values(TestTypeEnum).forEach((type: TestTypeEnum) => {
+      const result = results.find(item => item.getDataValue('type') === type);
+      const count = result ? Number(result.getDataValue('count')) : 0;
+      (experienceCounts as any)[type] = count;
+    });
+    return experienceCounts as IUserExperience;
+  }
 }

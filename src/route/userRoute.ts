@@ -58,10 +58,14 @@ userRoute
   );
 
 userRoute
-  .route('/experience')
+  .route('/test/experience')
   .get(
     authenticateMiddleware,
     UserExperienceController.getExperienceCountByType
   );
+
+userRoute
+  .route('/test/count')
+  .get(authenticateMiddleware, UserExperienceController.getCountByType);
 
 export default userRoute;
