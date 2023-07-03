@@ -27,7 +27,7 @@ export default class UserExperienceService {
     Object.values(TestTypeEnum).forEach((type: TestTypeEnum) => {
       const result = results.find(item => item.getDataValue('type') === type);
       const experience = result ? Number(result.getDataValue('experience')) : 0;
-      (experienceCounts as any)[type] = experience;
+      experienceCounts[type] = experience;
     });
     return experienceCounts as IUserExperience;
   }
@@ -41,12 +41,12 @@ export default class UserExperienceService {
       where: { userId: userId },
       group: ['type'],
     });
-    const experienceCounts: Partial<IUserExperience> = {};
+    const counts: Partial<IUserExperience> = {};
     Object.values(TestTypeEnum).forEach((type: TestTypeEnum) => {
       const result = results.find(item => item.getDataValue('type') === type);
       const count = result ? Number(result.getDataValue('count')) : 0;
-      (experienceCounts as any)[type] = count;
+      counts[type] = count;
     });
-    return experienceCounts as IUserExperience;
+    return counts as IUserExperience;
   }
 }

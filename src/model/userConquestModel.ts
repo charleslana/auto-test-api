@@ -1,16 +1,17 @@
+import ConquestModel from './conquestModel';
+import UserModel from './userModel';
 import { database } from './database';
 import { DataTypes, Model, Sequelize } from 'sequelize';
 
-export default class ItemModel extends Model {
+export default class UserConquestModel extends Model {
   public id!: string;
-  public name!: string;
-  public description!: string;
-  public expiryDay!: number | null;
+  public userId!: string;
+  public conquestId!: string;
   public createdAt!: Date;
   public updatedAt!: Date;
 }
 
-ItemModel.init(
+UserConquestModel.init(
   {
     id: {
       type: DataTypes.BIGINT,
@@ -18,18 +19,25 @@ ItemModel.init(
       allowNull: false,
       primaryKey: true,
     },
-    name: {
-      type: DataTypes.STRING,
-      unique: true,
+    userId: {
+      type: DataTypes.BIGINT,
       allowNull: false,
+      onDelete: 'CASCADE',
+      references: {
+        model: UserModel,
+        key: 'id',
+      },
+      field: 'user_id',
     },
-    description: {
-      type: DataTypes.TEXT,
+    conquestId: {
+      type: DataTypes.BIGINT,
       allowNull: false,
-    },
-    expiryDay: {
-      type: DataTypes.INTEGER,
-      field: 'expiry_day',
+      onDelete: 'CASCADE',
+      references: {
+        model: ConquestModel,
+        key: 'id',
+      },
+      field: 'conquest_id',
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -44,9 +52,14 @@ ItemModel.init(
   },
   {
     sequelize: database,
-    tableName: 'tb_item',
+    tableName: 'tb_user_conquest',
     freezeTableName: true,
     timestamps: true,
     updatedAt: true,
   }
 );
+
+UserConquestModel.belongsTo(ConquestModel, {
+  as: 'conquest',
+  foreignKey: 'conquestId',
+});

@@ -2,6 +2,7 @@ import HandlerError from '../handler/handlerError';
 import IOpenai from '../interface/IOpenai';
 import ISendOpenai from '../interface/ISendOpenai';
 import TestTypeEnum from '../enum/testTypeEnum';
+import UserConquestService from './userConquestService';
 import UserExperienceModel from '../model/userExperienceModel';
 import UserExperienceService from './userExperienceService';
 import UserHistoricModel from '../model/userHistoricModel';
@@ -56,6 +57,7 @@ export default class OpenaiService {
       );
       const experience = await this.saveUserBounty(userId);
       await this.saveExperience(userId, experience, i.type);
+      await UserConquestService.addNewConquests(userId);
       return {
         error: false,
         message: response.data.choices[0].message?.content,

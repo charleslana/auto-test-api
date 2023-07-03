@@ -1,16 +1,18 @@
+import TestTypeEnum from '../enum/testTypeEnum';
 import { database } from './database';
 import { DataTypes, Model, Sequelize } from 'sequelize';
 
-export default class ItemModel extends Model {
+export default class ConquestModel extends Model {
   public id!: string;
   public name!: string;
   public description!: string;
-  public expiryDay!: number | null;
+  public experience!: number;
+  public type!: TestTypeEnum;
   public createdAt!: Date;
   public updatedAt!: Date;
 }
 
-ItemModel.init(
+ConquestModel.init(
   {
     id: {
       type: DataTypes.BIGINT,
@@ -27,9 +29,13 @@ ItemModel.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    expiryDay: {
+    experience: {
       type: DataTypes.INTEGER,
-      field: 'expiry_day',
+      allowNull: false,
+    },
+    type: {
+      type: DataTypes.ENUM(...Object.values(TestTypeEnum)),
+      allowNull: false,
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -44,7 +50,7 @@ ItemModel.init(
   },
   {
     sequelize: database,
-    tableName: 'tb_item',
+    tableName: 'tb_conquest',
     freezeTableName: true,
     timestamps: true,
     updatedAt: true,
