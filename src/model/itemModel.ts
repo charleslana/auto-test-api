@@ -1,3 +1,4 @@
+import TestTypeEnum from '../enum/testTypeEnum';
 import { database } from './database';
 import { DataTypes, Model, Sequelize } from 'sequelize';
 
@@ -6,6 +7,7 @@ export default class ItemModel extends Model {
   public name!: string;
   public description!: string;
   public expiryDay!: number | null;
+  public type!: TestTypeEnum;
   public createdAt!: Date;
   public updatedAt!: Date;
 }
@@ -30,6 +32,10 @@ ItemModel.init(
     expiryDay: {
       type: DataTypes.INTEGER,
       field: 'expiry_day',
+    },
+    type: {
+      type: DataTypes.ENUM(...Object.values(TestTypeEnum)),
+      allowNull: false,
     },
     createdAt: {
       type: DataTypes.DATE,
