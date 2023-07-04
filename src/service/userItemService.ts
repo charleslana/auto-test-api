@@ -2,6 +2,7 @@ import HandlerError from '../handler/handlerError';
 import HandlerSuccess from '../handler/handlerSuccess';
 import ItemModel from '../model/itemModel';
 import ItemService from './itemService';
+import TestTypeEnum from '../enum/testTypeEnum';
 import UserItemModel from '../model/userItemModel';
 import { Op } from 'sequelize';
 
@@ -68,6 +69,27 @@ export default class UserItemService {
         },
       },
     });
+  }
+
+  public static async validateUserItemExistsType(
+    userId: string,
+    type: TestTypeEnum
+  ): Promise<boolean> {
+    const userItem = await UserItemModel.findOne({
+      where: {
+        userId: userId,
+      },
+      include: [
+        {
+          model: ItemModel,
+          as: 'item',
+          where: {
+            type: type,
+          },
+        },
+      ],
+    });
+    return userItem !== null;
   }
 
   private static async existUserItemByUserId(

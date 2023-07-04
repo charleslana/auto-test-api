@@ -7,6 +7,7 @@ import UserExperienceModel from '../model/userExperienceModel';
 import UserExperienceService from './userExperienceService';
 import UserHistoricModel from '../model/userHistoricModel';
 import UserHistoricService from './userHistoricService';
+import UserItemService from './userItemService';
 import UserService from './userService';
 import { OpenAIApi } from 'openai';
 import { randomNumber } from '../utils/utils';
@@ -31,6 +32,7 @@ const openai = new OpenAIApi(configuration);
 
 export default class OpenaiService {
   public static async send(i: ISendOpenai, userId: string): Promise<IOpenai> {
+    await this.validateUserItemExistsType(userId, i.type);
     try {
       const input = `Contexto:\n${i.context ?? ''}\n\nEntrada: ${
         i.input
@@ -132,6 +134,19 @@ export default class OpenaiService {
         return sqlQueryBuilder;
       default:
         return testGenerator;
+    }
+  }
+
+  private static async validateUserItemExistsType(
+    userId: string,
+    type: TestTypeEnum
+  ): Promise<void> {
+    const validate = await UserItemService.validateUserItemExistsType(
+      userId,
+      type
+    );
+    if (!validate) {
+      throw new HandlerError('Você não possui o item da ferramenta', 400);
     }
   }
 }
