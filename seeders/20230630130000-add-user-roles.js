@@ -1,7 +1,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const users = await queryInterface.sequelize.query(
-      'SELECT id FROM tb_user;',
+      'SELECT id FROM tb_user;'
     );
 
     const userIds = users[0].map(user => user.id);
@@ -11,7 +11,7 @@ module.exports = {
       userIds.map(userId => ({
         name: 'admin',
         user_id: userId,
-      })),
+      }))
     );
   },
 

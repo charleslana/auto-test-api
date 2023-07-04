@@ -13,7 +13,7 @@ module.exports = {
       10: 4500,
       11: 5000,
       12: 6000,
-      13: 10000
+      13: 10000,
     };
     const shopItems = Object.entries(itemScores).map(([itemId, score]) => ({
       score: score,
@@ -24,5 +24,5 @@ module.exports = {
 
   down: async (queryInterface, Sequelize) => {
     await queryInterface.bulkDelete('tb_shop', null, {});
-  }
+  },
 };
