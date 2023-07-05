@@ -1,3 +1,5 @@
+import TestTypeEnum from '../enum/testTypeEnum';
+
 export const randomString = (length: number): string => {
   let string = '';
   const randomChar = function () {
@@ -27,3 +29,36 @@ export const randomNumber = (minimum: number, maximum: number): number => {
 export const formatNumber = (number: number): string => {
   return number.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
 };
+
+export function translateEnumValue(value: TestTypeEnum): string {
+  switch (value) {
+    case TestTypeEnum.TestGenerator:
+      return 'Gerador de Testes';
+    case TestTypeEnum.StepGenerator:
+      return 'Gerador de Passo a Passo';
+    case TestTypeEnum.BugReport:
+      return 'Relatório de Defeito';
+    case TestTypeEnum.TestPlan:
+      return 'Plano de Testes';
+    case TestTypeEnum.QualityIndicator:
+      return 'Indicadores de Qualidade';
+    case TestTypeEnum.TestTranslator:
+      return 'Tradutor de Testes';
+    case TestTypeEnum.UsabilityTestCase:
+      return 'Casos de Testes de Usabilidade (UX)';
+    case TestTypeEnum.TestMassGenerator:
+      return 'Gerador de Massa de Testes';
+    case TestTypeEnum.GherkinLanguage:
+      return 'Linguagem Gherkin';
+    case TestTypeEnum.SecurityTest:
+      return 'Testes de Segurança';
+    case TestTypeEnum.PerformanceTest:
+      return 'Testes de Performance';
+    case TestTypeEnum.APITest:
+      return 'Testes de API';
+    case TestTypeEnum.SQLQueryBuilder:
+      return 'Construtor de Query SQL';
+    default:
+      return '';
+  }
+}

@@ -30,4 +30,8 @@ userHistoricRoute
     UserHistoricController.delete
   );
 
+userHistoricRoute
+  .route('/export/xlsx')
+  .get(authenticateMiddleware, UserHistoricController.exportToExcel);
+
 export default userHistoricRoute;

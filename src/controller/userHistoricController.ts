@@ -1,3 +1,4 @@
+import fs from 'fs';
 import logger from '../utils/logger';
 import TestTypeEnum from '../enum/testTypeEnum';
 import UserHistoricService from '../service/userHistoricService';
@@ -53,6 +54,30 @@ export default class UserHistoricController {
       const { id } = request.params;
       const app = await UserHistoricService.delete(id, request.user.id);
       return app.toJSON(response);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  public static async exportToExcel(
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ) {
+    logger.info(`Export user history in Excel with id ${request.user.id}`);
+    try {
+      const { filePath, fileName } = await UserHistoricService.exportToExcel(
+        request.user.id
+      );
+      response.download(filePath, fileName, err => {
+        if (err) {
+          console.error('Error downloading file:', err);
+        } else {
+          console.log('File downloaded successfully!');
+          fs.unlinkSync(filePath);
+          console.log(`Deleted file: ${filePath}`);
+        }
+      });
     } catch (error) {
       next(error);
     }
