@@ -6,28 +6,28 @@ module.exports = {
         {
           name: 'Mestre dos Testes',
           description:
-            'Complete com sucesso o desafio do Test Generator e mostre seu domínio em criar testes abrangentes e eficazes.',
+            'Complete com sucesso o desafio do Gerador de Testes e mostre seu domínio em criar testes abrangentes e eficazes.',
           experience: 2800,
           type: 'testGenerator',
         },
         {
           name: 'Gerador de Etapas',
           description:
-            'Domine o Step Generator e seja reconhecido por sua habilidade em criar etapas claras e precisas para os testes.',
+            'Domine o Gerador de Passo a Passo e seja reconhecido por sua habilidade em criar etapas claras e precisas para os testes.',
           experience: 4200,
           type: 'stepGenerator',
         },
         {
           name: 'Caçador de Bugs',
           description:
-            'Torne-se um especialista em encontrar e relatar bugs com precisão e detalhes, desbloqueando o Bug Report.',
+            'Torne-se um especialista em encontrar e relatar bugs com precisão e detalhes, desbloqueando o Relatório de Defeito.',
           experience: 1800,
           type: 'bugReport',
         },
         {
           name: 'Arquiteto de Testes',
           description:
-            'Crie um Test Plan abrangente que cubra todas as áreas críticas do software e demonstre seu domínio na arte de planejar testes.',
+            'Crie um Plano de Testes abrangente que cubra todas as áreas críticas do software e demonstre seu domínio na arte de planejar testes.',
           experience: 5600,
           type: 'testPlan',
         },
@@ -41,7 +41,7 @@ module.exports = {
         {
           name: 'Tradutor de Testes',
           description:
-            'Habilite o Test Translator e seja capaz de traduzir testes em vários idiomas, facilitando a colaboração em equipes internacionais.',
+            'Habilite o Tradutor de Testes e seja capaz de traduzir testes em vários idiomas, facilitando a colaboração em equipes internacionais.',
           experience: 2800,
           type: 'testTranslator',
         },
@@ -55,14 +55,14 @@ module.exports = {
         {
           name: 'Gerador de Testes em Massa',
           description:
-            'Desbloqueie o poder do Test Mass Generator e seja capaz de criar um grande número de testes de forma rápida e eficiente.',
+            'Desbloqueie o poder do Gerador de Massa de Testes e seja capaz de criar um grande número de testes de forma rápida e eficiente.',
           experience: 9200,
           type: 'testMassGenerator',
         },
         {
           name: 'Linguagem Gherkin',
           description:
-            'Domine a Gherkin Language e escreva cenários de teste claros e concisos para melhorar a comunicação e a colaboração.',
+            'Domine a Linguagem Gherkin e escreva cenários de teste claros e concisos para melhorar a comunicação e a colaboração.',
           experience: 4200,
           type: 'gherkinLanguage',
         },
@@ -83,42 +83,42 @@ module.exports = {
         {
           name: 'Teste de API',
           description:
-            'Desbloqueie o APITest e seja capaz de validar a funcionalidade e a integração perfeita de APIs em seus testes de software.',
+            'Desbloqueie o Testes de API e seja capaz de validar a funcionalidade e a integração perfeita de APIs em seus testes de software.',
           experience: 5500,
           type: 'apiTest',
         },
         {
           name: 'Construtor de Consultas SQL',
           description:
-            'Domine o SQL Query Builder e crie consultas SQL complexas para testar a integridade e a eficiência dos bancos de dados.',
+            'Domine o Construtor de Query SQL e crie consultas SQL complexas para testar a integridade e a eficiência dos bancos de dados.',
           experience: 6400,
           type: 'sqlQueryBuilder',
         },
         {
           name: 'Desbravador de Testes',
           description:
-            'Seja pioneiro na exploração e aplicação do Test Generator, gerando testes inovadores e impulsionando a qualidade do software.',
+            'Seja pioneiro na exploração e aplicação do Gerador de Testes, gerando testes inovadores e impulsionando a qualidade do software.',
           experience: 5500,
           type: 'testGenerator',
         },
         {
           name: 'Mestre das Etapas',
           description:
-            'Domine o Step Generator e crie etapas de teste detalhadas e eficazes, estabelecendo um padrão elevado de execução de testes.',
+            'Domine o Gerador de Passo a Passo e crie etapas de teste detalhadas e eficazes, estabelecendo um padrão elevado de execução de testes.',
           experience: 7200,
           type: 'stepGenerator',
         },
         {
           name: 'Caçador de Defeitos',
           description:
-            'Desbloqueie o Bug Report ao se destacar na identificação e no relato de defeitos, contribuindo para a melhoria contínua do software.',
+            'Desbloqueie o Relatório de Defeito ao se destacar na identificação e no relato de defeitos, contribuindo para a melhoria contínua do software.',
           experience: 3900,
           type: 'bugReport',
         },
         {
           name: 'Estrategista de Testes',
           description:
-            'Torne-se um especialista na criação de Test Plans abrangentes, desenvolvendo estratégias de teste sólidas e eficientes.',
+            'Torne-se um especialista na criação de Plano de Testes abrangentes, desenvolvendo estratégias de teste sólidas e eficientes.',
           experience: 6200,
           type: 'testPlan',
         },
@@ -139,49 +139,49 @@ module.exports = {
         {
           name: 'Experiência do Usuário em Foco',
           description:
-            'Domine a criação de Usability Test Cases e garanta que o software ofereça uma experiência intuitiva e amigável para os usuários.',
+            'Domine a criação de Casos de Testes de Usabilidade (UX) e garanta que o software ofereça uma experiência intuitiva e amigável para os usuários.',
           experience: 5900,
           type: 'usabilityTestCase',
         },
         {
           name: 'Criador Incansável de Testes',
           description:
-            'Desbloqueie o poder do Test Mass Generator, permitindo a criação rápida e eficiente de uma grande quantidade de testes.',
+            'Desbloqueie o poder do Gerador de Massa de Testes, permitindo a criação rápida e eficiente de uma grande quantidade de testes.',
           experience: 9100,
           type: 'testMassGenerator',
         },
         {
           name: 'Especialista em Gherkin',
           description:
-            'Aprofunde-se na Gherkin Language e demonstre habilidades excepcionais na escrita de cenários de teste claros e concisos.',
+            'Aprofunde-se na Linguagem Gherkin e demonstre habilidades excepcionais na escrita de cenários de teste claros e concisos.',
           experience: 6700,
           type: 'gherkinLanguage',
         },
         {
           name: 'Defensor da Segurança',
           description:
-            'Torne-se um especialista em Security Test, identificando e solucionando vulnerabilidades de segurança no software.',
+            'Torne-se um especialista em Testes de Segurança, identificando e solucionando vulnerabilidades de segurança no software.',
           experience: 4500,
           type: 'securityTest',
         },
         {
           name: 'Domínio do Desempenho',
           description:
-            'Desenvolva expertise em Performance Test e otimize o desempenho do software, garantindo uma experiência fluida e eficiente.',
+            'Desenvolva expertise em Testes de Performance e otimize o desempenho do software, garantindo uma experiência fluida e eficiente.',
           experience: 7100,
           type: 'performanceTest',
         },
         {
           name: 'Explorador de APIs',
           description:
-            'Domine o APITest e seja capaz de validar a funcionalidade e a integração de APIs em um ambiente de software.',
+            'Domine o Testes de API e seja capaz de validar a funcionalidade e a integração de APIs em um ambiente de software.',
           experience: 3900,
           type: 'apiTest',
         },
         {
           name: 'Mestre em Consultas SQL',
           description:
-            'Aperfeiçoe suas habilidades em SQL Query Builder e crie consultas SQL avançadas para testar a integridade e a eficiência do banco de dados.',
+            'Aperfeiçoe suas habilidades em Construtor de Query SQL e crie consultas SQL avançadas para testar a integridade e a eficiência do banco de dados.',
           experience: 6400,
           type: 'sqlQueryBuilder',
         },
