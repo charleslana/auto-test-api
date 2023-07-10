@@ -17,4 +17,12 @@ userConquestRoute
     UserConquestController.findOne
   );
 
+userConquestRoute
+  .route('/by/:id')
+  .get(
+    idParamMiddleware(),
+    authenticateMiddleware,
+    UserConquestController.findAllById
+  );
+
 export default userConquestRoute;

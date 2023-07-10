@@ -33,4 +33,18 @@ export default class UserConquestController {
       next(error);
     }
   }
+
+  public static async findAllById(
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ) {
+    logger.info(`Get all user conquest with id ${request.params.id}`);
+    try {
+      const { id } = request.params;
+      return response.status(200).json(await UserConquestService.getAll(id));
+    } catch (error) {
+      next(error);
+    }
+  }
 }
