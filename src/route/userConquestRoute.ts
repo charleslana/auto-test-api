@@ -1,6 +1,6 @@
 import authenticateMiddleware from '../middleware/authenticateMiddleware';
 import express from 'express';
-import UserConquestController from '../controller/userConquestController';
+import UserConquestController from '../controller/UserConquestController';
 import { idParamMiddleware } from '../middleware/celebrate/commonCelebrate';
 
 const userConquestRoute = express.Router();

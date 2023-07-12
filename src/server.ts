@@ -1,13 +1,13 @@
 import cors from 'cors';
-import CronJobService from './service/cronjobService';
+import CronJobService from './service/CronjobService';
+import database from './database';
 import errorMiddleware from './middleware/errorMiddleware';
 import express, { Request, Response } from 'express';
-import HandlerSuccess from './handler/handlerSuccess';
+import HandlerSuccess from './handler/HandlerSuccess';
 import helmet from 'helmet';
 import logger from './utils/logger';
 import rateLimit from 'express-rate-limit';
 import routes from './route';
-import { database } from './model/database';
 import { errors } from 'celebrate';
 
 const app = express();
@@ -44,5 +44,5 @@ const port = process.env.PORT || 5000;
 app.listen(port, async () => {
   await database.sync();
   CronJobService.start();
-  console.log(`Started on port ${port}`);
+  logger.info(`Started on port ${port}`);
 });

@@ -1,7 +1,7 @@
-import DecodeType from '../types/decodeType';
-import HandlerError from '../handler/handlerError';
+import DecodeType from '../types/DecodeType';
+import HandlerError from '../handler/HandlerError';
 import jwt from 'jsonwebtoken';
-import UserService from '../service/userService';
+import UserService from '../service/UserService';
 import { NextFunction, Request, Response } from 'express';
 
 const handleUnauthorizedError = (next: NextFunction): void => {

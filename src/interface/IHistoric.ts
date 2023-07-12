@@ -1,4 +1,4 @@
-import UserHistoricModel from '../model/userHistoricModel';
+import UserHistoricModel from '../model/UserHistoricModel';
 
 export default interface IHistoric {
   results: UserHistoricModel[];

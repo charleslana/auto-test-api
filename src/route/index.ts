@@ -1,6 +1,6 @@
 import conquestRoute from './conquestRoute';
 import itemRoute from './itemRoute';
-import openaiRoute from './openaiRoute';
+import openAIRoute from './openAIRoute';
 import shopRoute from './shopRoute';
 import userConquestRoute from './userConquestRoute';
 import userHistoricRoute from './userHistoricRoute';
@@ -11,7 +11,7 @@ import { Router } from 'express';
 const routes = Router();
 
 routes.use('/user', userRoute);
-routes.use('/openai', openaiRoute);
+routes.use('/openai', openAIRoute);
 routes.use('/user/historic', userHistoricRoute);
 routes.use('/item', itemRoute);
 routes.use('/user/item', userItemRoute);

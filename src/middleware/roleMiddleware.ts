@@ -1,5 +1,5 @@
-import HandlerError from '../handler/handlerError';
-import UserRoleModel from '../model/userRoleModel';
+import HandlerError from '../handler/HandlerError';
+import UserRoleModel from '../model/UserRoleModel';
 import { NextFunction, Request, Response } from 'express';
 
 const roleMiddleware = (roles: string[] = []) => {

@@ -1,4 +1,4 @@
-import UserRankEnum from '../enum/userRankEnum';
+import UserRankEnum from '../enum/UserRankEnum';
 
 export default interface IUserPaginated {
   page: number;

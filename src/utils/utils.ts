@@ -1,4 +1,4 @@
-import TestTypeEnum from '../enum/testTypeEnum';
+import TestTypeEnum from '../enum/TestTypeEnum';
 
 export const randomString = (length: number): string => {
   let string = '';

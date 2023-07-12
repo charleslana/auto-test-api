@@ -1,7 +1,7 @@
 import authenticateMiddleware from '../middleware/authenticateMiddleware';
 import express from 'express';
-import UserController from '../controller/userController';
-import UserExperienceController from '../controller/userExperienceController';
+import UserController from '../controller/UserController';
+import UserExperienceController from '../controller/UserExperienceController';
 import { idParamMiddleware } from '../middleware/celebrate/commonCelebrate';
 import {
   userCreateMiddleware,

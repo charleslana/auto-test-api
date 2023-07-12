@@ -1,8 +1,8 @@
 import authenticateMiddleware from '../middleware/authenticateMiddleware';
 import express from 'express';
-import ItemController from '../controller/itemController';
+import ItemController from '../controller/ItemController';
 import roleMiddleware from '../middleware/roleMiddleware';
-import UserRoleEnum from '../enum/userRoleEnum';
+import UserRoleEnum from '../enum/UserRoleEnum';
 import { idParamMiddleware } from '../middleware/celebrate/commonCelebrate';
 import {
   escapeItemHTMLMiddleware,

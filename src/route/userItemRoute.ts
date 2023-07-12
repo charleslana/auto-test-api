@@ -1,6 +1,6 @@
 import authenticateMiddleware from '../middleware/authenticateMiddleware';
 import express from 'express';
-import UserItemController from '../controller/userItemController';
+import UserItemController from '../controller/UserItemController';
 import { idParamMiddleware } from '../middleware/celebrate/commonCelebrate';
 import { userItemValidateTypeMiddleware } from '../middleware/celebrate/userItemCelebrate';
 

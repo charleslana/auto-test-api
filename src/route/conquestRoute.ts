@@ -1,8 +1,8 @@
 import authenticateMiddleware from '../middleware/authenticateMiddleware';
-import ConquestController from '../controller/conquestController';
+import ConquestController from '../controller/ConquestController';
 import express from 'express';
 import roleMiddleware from '../middleware/roleMiddleware';
-import UserRoleEnum from '../enum/userRoleEnum';
+import UserRoleEnum from '../enum/UserRoleEnum';
 import { idParamMiddleware } from '../middleware/celebrate/commonCelebrate';
 import {
   conquestCreateMiddleware,

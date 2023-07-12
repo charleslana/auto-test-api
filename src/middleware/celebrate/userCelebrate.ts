@@ -1,4 +1,4 @@
-import UserRankEnum from '../../enum/userRankEnum';
+import UserRankEnum from '../../enum/UserRankEnum';
 import { celebrate, Joi, Segments } from 'celebrate';
 
 export const userCreateMiddleware = () => {

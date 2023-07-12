@@ -1,6 +1,6 @@
 import authenticateMiddleware from '../middleware/authenticateMiddleware';
 import express from 'express';
-import UserHistoricController from '../controller/userHistoricController';
+import UserHistoricController from '../controller/UserHistoricController';
 import { idParamMiddleware } from '../middleware/celebrate/commonCelebrate';
 import { userHistoricPageMiddleware } from '../middleware/celebrate/userHistoricCelebrate';
 

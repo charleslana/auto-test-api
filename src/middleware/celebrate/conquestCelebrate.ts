@@ -1,4 +1,4 @@
-import TestTypeEnum from '../../enum/testTypeEnum';
+import TestTypeEnum from '../../enum/TestTypeEnum';
 import { celebrate, Joi, Segments } from 'celebrate';
 import { escapeTagsHTML } from './commonCelebrate';
 import { NextFunction, Request, Response } from 'express';

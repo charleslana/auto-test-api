@@ -1,8 +1,8 @@
 import authenticateMiddleware from '../middleware/authenticateMiddleware';
 import express from 'express';
 import roleMiddleware from '../middleware/roleMiddleware';
-import ShopController from '../controller/shopController';
-import UserRoleEnum from '../enum/userRoleEnum';
+import ShopController from '../controller/ShopController';
+import UserRoleEnum from '../enum/UserRoleEnum';
 import { idParamMiddleware } from '../middleware/celebrate/commonCelebrate';
 import {
   shopCreateMiddleware,

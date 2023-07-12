@@ -1,4 +1,4 @@
-import UserModel from '../model/userModel';
+import UserModel from '../model/UserModel';
 
 export default interface IRankAndUserList {
   results: UserModel[];
