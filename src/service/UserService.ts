@@ -11,7 +11,12 @@ import UserItemService from './UserItemService';
 import UserModel from '../model/UserModel';
 import UserRankEnum from '../enum/UserRankEnum';
 import UserRoleModel from '../model/UserRoleModel';
-import { formatDate, formatNumber, randomString } from '../utils/utils';
+import {
+  formatDate,
+  formatNumber,
+  nameScorePrice,
+  randomString,
+} from '../utils/utils';
 
 export default class UserService {
   public static async save(model: UserModel): Promise<HandlerSuccess> {
@@ -291,12 +296,11 @@ export default class UserService {
 
   public static async buyNameChange(model: UserModel) {
     const find = await this.get(model.id);
-    const scorePrice = 1000;
-    if (find.score < scorePrice) {
+    if (find.score < nameScorePrice) {
       throw new HandlerError(
         `Você não possui a quantidade suficiente para trocar o nome, necessário ${formatNumber(
-          scorePrice
-        )} score.`,
+          nameScorePrice
+        )} pontos.`,
         400
       );
     }
@@ -305,7 +309,7 @@ export default class UserService {
       await UserModel.update(
         {
           name: model.name,
-          score: sequelize.literal(`score - ${scorePrice}`),
+          score: sequelize.literal(`score - ${nameScorePrice}`),
         },
         {
           where: {
@@ -315,6 +319,10 @@ export default class UserService {
       );
     }
     return new HandlerSuccess('Nome atualizado com sucesso.');
+  }
+
+  public static getNameScorePrice() {
+    return nameScorePrice;
   }
 
   public static async reduceScore(id: string, score: number): Promise<void> {

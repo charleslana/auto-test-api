@@ -62,3 +62,5 @@ export function translateEnumValue(value: TestTypeEnum): string {
       return '';
   }
 }
+
+export const nameScorePrice = 10000;

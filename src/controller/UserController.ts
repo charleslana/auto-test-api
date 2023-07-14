@@ -144,4 +144,17 @@ export default class UserController {
       next(error);
     }
   }
+
+  public static getNameScorePrice(
+    _request: Request,
+    response: Response,
+    next: NextFunction
+  ) {
+    logger.info('Get name score price');
+    try {
+      return response.status(200).json(UserService.getNameScorePrice());
+    } catch (error) {
+      next(error);
+    }
+  }
 }

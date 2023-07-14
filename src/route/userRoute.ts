@@ -58,6 +58,10 @@ userRoute
   );
 
 userRoute
+  .route('/buy-name')
+  .get(authenticateMiddleware, UserController.getNameScorePrice);
+
+userRoute
   .route('/test/experience')
   .get(
     authenticateMiddleware,
