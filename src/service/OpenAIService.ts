@@ -13,8 +13,10 @@ import { OpenAIApi } from 'openai';
 import { randomNumber } from '../utils/utils';
 import {
   apiTest,
+  automationCode,
   bugReport,
   configuration,
+  cucumberCode,
   gherkinLanguage,
   performanceTest,
   qualityIndicator,
@@ -25,6 +27,7 @@ import {
   testMassGenerator,
   testPlan,
   testTranslator,
+  testingStrategy,
   usabilityTestCase,
 } from '../utils/openai';
 
@@ -132,6 +135,12 @@ export default class OpenAIService {
         return apiTest;
       case TestTypeEnum.SQLQueryBuilder:
         return sqlQueryBuilder;
+      case TestTypeEnum.CucumberCode:
+        return cucumberCode;
+      case TestTypeEnum.AutomationCode:
+        return automationCode;
+      case TestTypeEnum.TestingStrategy:
+        return testingStrategy;
       default:
         return testGenerator;
     }

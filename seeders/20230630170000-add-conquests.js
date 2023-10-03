@@ -185,6 +185,48 @@ module.exports = {
           experience: 6400,
           type: 'sqlQueryBuilder',
         },
+        {
+          name: 'Mestre do Cucumber',
+          description:
+            'Escreva e mantenha com sucesso dez cenários de teste completos usando a linguagem de especificação Gherkin e o framework Cucumber. Seja um mestre na criação de cenários legíveis e funcionais para automação de testes.',
+          experience: 5000,
+          type: 'cucumberCode',
+        },
+        {
+          name: 'Cucumber na Veia',
+          description:
+            'Implemente uma suíte de testes end-to-end abrangente para um projeto de software complexo usando Cucumber. Demonstre sua habilidade em criar e manter cenários de teste que abordem todos os aspectos críticos do sistema, contribuindo para a qualidade e estabilidade do software.',
+          experience: 9000,
+          type: 'cucumberCode',
+        },
+        {
+          name: 'Arquiteto de Automação',
+          description:
+            'Desenvolva um framework de automação personalizado do zero que seja reutilizável, flexível e escalável. Seja um arquiteto de automação que lidera a equipe na construção de estruturas robustas para testes de software automatizados.',
+          experience: 7000,
+          type: 'automationCode',
+        },
+        {
+          name: 'Domador de Frameworks',
+          description:
+            'Integre com sucesso três frameworks de automação diferentes em um único projeto de teste, aproveitando suas vantagens únicas. Mostre sua habilidade em combinar tecnologias de automação para criar uma solução eficaz para testes automatizados.',
+          experience: 9800,
+          type: 'automationCode',
+        },
+        {
+          name: 'Estrategista de Qualidade de Software',
+          description:
+            'Desenvolva uma estratégia de qualidade de software abrangente para um projeto crítico, abordando não apenas testes, mas também revisões de código, análise estática, automação e práticas de melhoria contínua. Garanta que o software seja lançado com o mais alto nível de qualidade, cumprindo padrões rigorosos de excelência. Seja um líder na busca incessante pela qualidade de software em sua organização.',
+          experience: 3000,
+          type: 'testingStrategy',
+        },
+        {
+          name: 'Mestre da Estratégia de Testes',
+          description:
+            'Lidere a equipe de testes na criação de uma estratégia de testes que não apenas identifique bugs, mas também melhore a qualidade geral do software. Utilize métricas e análises para otimizar continuamente a abordagem de testes, tornando-se um mestre na arte da estratégia de testes.',
+          experience: 6200,
+          type: 'testingStrategy',
+        },
       ],
       {}
     );

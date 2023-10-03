@@ -30,6 +30,7 @@ export default class UserService {
       throw new HandlerError('E-mail já cadastrado.');
     }
     model.password = this.encrypt(model.password as string);
+    model.score = 5000;
     const user = await UserModel.create(model as Optional<unknown, never>);
     const itemIds = ['1', '2', '3'];
     for (const itemId of itemIds) {

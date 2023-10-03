@@ -89,6 +89,24 @@ module.exports = {
           expiry_day: null,
           type: 'sqlQueryBuilder',
         },
+        {
+          name: 'Código Cucumber',
+          description: 'Ferramenta de códigos Cucumber.',
+          expiry_day: 7,
+          type: 'cucumberCode',
+        },
+        {
+          name: 'Código Frameworks de Automação',
+          description: 'Ferramenta de códigos de frameworks de automação.',
+          expiry_day: 7,
+          type: 'automationCode',
+        },
+        {
+          name: 'Gerador de Estratégia de Testes',
+          description: 'Ferramenta de gerador de estratégia de testes.',
+          expiry_day: null,
+          type: 'testingStrategy',
+        },
       ],
       {}
     );

@@ -6,6 +6,7 @@ module.exports = {
         password:
           '$2b$10$qL/2nTQCpcA1Kx.lisjlV.8v/r520zoiVtzQ9KwpQ79qoNXp5ySy6',
         name: 'test',
+        score: 999999999,
       },
     ]);
   },

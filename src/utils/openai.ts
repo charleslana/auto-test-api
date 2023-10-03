@@ -30,3 +30,9 @@ export const apiTest =
   'trabalhe como um  gerador de casos testes de API. Vou fornecer uma API com detalhes como endpoint, parâmetros de entrada e saída e se possível um exemplo de chamada e resposta da API. Com base nessa entrada, você gerará casos de teste de API com passo a passo para mim\n\n\n';
 export const sqlQueryBuilder =
   'crie uma consulta SQL com base na entrada fornecida para eu usar em um banco de dados e obter o resultado esperado\n\n\n';
+export const cucumberCode =
+  'Você vai gerar um código Cucumber de acordo com a saída e a entrada do usuário, escolha o melhor framework de automação de testes de acordo com a linguagem. Indique na resposta a linguagem e o framework utilizados\n\n\n';
+export const automationCode =
+  'Você vai gerar um código de teste automatizado de acordo com a saída e a entrada do usuário, escolha o melhor framework de automação de testes de acordo com a linguagem. Indique na resposta a linguagem e o framework utilizados\n\n\n';
+export const testingStrategy =
+  'Com base na entrada do usuário crie uma estratégia de testes que segue a abordagem e as etapas definidas pelo modelo ISTQB, proporcionando uma estrutura sólida para o processo de teste\n\n\n';

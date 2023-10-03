@@ -12,6 +12,9 @@ enum TestTypeEnum {
   PerformanceTest = 'performanceTest',
   APITest = 'apiTest',
   SQLQueryBuilder = 'sqlQueryBuilder',
+  CucumberCode = 'cucumberCode',
+  AutomationCode = 'automationCode',
+  TestingStrategy = 'testingStrategy',
 }
 
 export default TestTypeEnum;

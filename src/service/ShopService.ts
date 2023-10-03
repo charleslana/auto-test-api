@@ -24,6 +24,10 @@ export default class ShopService {
           as: 'item',
         },
       ],
+      order: [
+        ['score', 'ASC'],
+        ['id', 'ASC'],
+      ],
     });
   }
 

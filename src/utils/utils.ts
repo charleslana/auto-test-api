@@ -58,6 +58,12 @@ export function translateEnumValue(value: TestTypeEnum): string {
       return 'Testes de API';
     case TestTypeEnum.SQLQueryBuilder:
       return 'Construtor de Query SQL';
+    case TestTypeEnum.CucumberCode:
+      return 'Código Cucumber';
+    case TestTypeEnum.AutomationCode:
+      return 'Código Frameworks de Automação';
+    case TestTypeEnum.TestingStrategy:
+      return 'Gerador de Estratégia de Testes';
     default:
       return '';
   }
