@@ -101,6 +101,7 @@ export default class UserService {
     );
     return new HandlerSuccess('Nome atualizado com sucesso.');
   }
+
   public static async updatePassword(
     password: IPassword,
     id: string

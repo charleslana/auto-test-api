@@ -94,7 +94,7 @@ export default class UserController {
     next: NextFunction
   ) {
     logger.info(
-      `Get paginate user ${request.user.id} page ${request.query.page}`
+      `Get pagination user ${request.user.id} page ${request.query.page}`
     );
     try {
       const { page, filterType } = request.query;
