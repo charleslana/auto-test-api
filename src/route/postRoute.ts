@@ -6,6 +6,7 @@ import UserRoleEnum from '../enum/UserRoleEnum';
 import { idParamMiddleware } from '../middleware/celebrate/commonCelebrate';
 import { pageMiddleware } from '../middleware/celebrate/pageCelebrate';
 import {
+  escapePostHTMLMiddleware,
   postCreateMiddleware,
   postUpdateMiddleware,
   searchPostMiddleware,
@@ -17,6 +18,7 @@ postRoute
   .route('/')
   .post(
     postCreateMiddleware(),
+    escapePostHTMLMiddleware,
     authenticateMiddleware,
     roleMiddleware([UserRoleEnum.Admin]),
     PostController.create
@@ -30,6 +32,7 @@ postRoute
   .route('/')
   .put(
     postUpdateMiddleware(),
+    escapePostHTMLMiddleware,
     authenticateMiddleware,
     roleMiddleware([UserRoleEnum.Admin]),
     PostController.update

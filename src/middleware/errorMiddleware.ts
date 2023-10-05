@@ -1,4 +1,5 @@
 import HandlerError from '../handler/HandlerError';
+import logger from '../utils/logger';
 import { NextFunction, Request, Response } from 'express';
 
 const errorMiddleware = (
@@ -11,6 +12,7 @@ const errorMiddleware = (
   const error = err.error || true;
   const message = err.message || 'Erro interno do servidor';
   const statusCode = err.statusCode || 500;
+  logger.error(message);
   return response.status(statusCode).json({ error, message });
 };
 

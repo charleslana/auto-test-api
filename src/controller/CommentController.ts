@@ -1,19 +1,19 @@
+import CommentModel from '../model/CommentModel';
+import CommentService from '../service/CommentService';
 import logger from '../utils/logger';
-import PostModel from '../model/PostModel';
-import PostService from '../service/PostService';
 import { NextFunction, Request, Response } from 'express';
 
-export default class PostController {
+export default class CommentController {
   public static async create(
     request: Request,
     response: Response,
     next: NextFunction
   ) {
-    logger.info(`Create post ${JSON.stringify(request.body)}`);
+    logger.info(`Create comment ${JSON.stringify(request.body)}`);
     try {
-      const post = request.body as PostModel;
-      post.userId = request.user.id;
-      const handler = await PostService.save(post);
+      const comment = request.body as CommentModel;
+      comment.userId = request.user.id;
+      const handler = await CommentService.save(comment);
       return handler.toJSON(response);
     } catch (error) {
       next(error);
@@ -25,11 +25,11 @@ export default class PostController {
     response: Response,
     next: NextFunction
   ) {
-    logger.info(`Update post with ${JSON.stringify(request.body)}`);
+    logger.info(`Update comment with ${JSON.stringify(request.body)}`);
     try {
-      const post = request.body as PostModel;
+      const post = request.body as CommentModel;
       post.userId = request.user.id;
-      const handler = await PostService.update(post);
+      const handler = await CommentService.update(post);
       return handler.toJSON(response);
     } catch (error) {
       next(error);
@@ -41,10 +41,12 @@ export default class PostController {
     response: Response,
     next: NextFunction
   ) {
-    logger.info(`Get post with id ${request.params.id}`);
+    logger.info(`Get comment with id ${request.params.id}`);
     try {
       const { id } = request.params;
-      return response.status(200).json(await PostService.get(id));
+      return response
+        .status(200)
+        .json(await CommentService.get(id, request.user.id));
     } catch (error) {
       next(error);
     }
@@ -55,13 +57,14 @@ export default class PostController {
     response: Response,
     next: NextFunction
   ) {
-    logger.info(`Get pagination post from page ${request.query.page}`);
+    logger.info(`Get pagination comment from page ${request.query.page}`);
     try {
-      const { page } = request.query;
+      const { page, postId } = request.query;
       return response.status(200).json(
-        await PostService.getPaginated({
+        await CommentService.getPaginated({
           page: page != undefined ? +page : 1,
           pageSize: 10,
+          postId: postId as string,
         })
       );
     } catch (error) {
@@ -74,27 +77,11 @@ export default class PostController {
     response: Response,
     next: NextFunction
   ) {
-    logger.info(`Delete post with id ${request.params.id}`);
+    logger.info(`Delete comment with id ${request.params.id}`);
     try {
       const { id } = request.params;
-      const app = await PostService.delete(id);
+      const app = await CommentService.delete(id, request.user.id);
       return app.toJSON(response);
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  public static async searchByTitle(
-    request: Request,
-    response: Response,
-    next: NextFunction
-  ) {
-    logger.info(`Search post with title ${request.query.title}`);
-    try {
-      const { title } = request.query;
-      return response
-        .status(200)
-        .json(await PostService.searchByTitle(title as string));
     } catch (error) {
       next(error);
     }

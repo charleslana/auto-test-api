@@ -1,7 +1,8 @@
+import commentRoute from './commentRoute';
 import conquestRoute from './conquestRoute';
 import itemRoute from './itemRoute';
 import openAIRoute from './openAIRoute';
-import postRoute from './postController';
+import postRoute from './postRoute';
 import shopRoute from './shopRoute';
 import userConquestRoute from './userConquestRoute';
 import userHistoricRoute from './userHistoricRoute';
@@ -20,5 +21,6 @@ routes.use('/shop', shopRoute);
 routes.use('/conquest', conquestRoute);
 routes.use('/user/conquest', userConquestRoute);
 routes.use('/post', postRoute);
+routes.use('/comment', commentRoute);
 
 export default routes;
