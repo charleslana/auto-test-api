@@ -82,6 +82,19 @@ export default class CommentService {
     return new HandlerSuccess('Comentário excluído com sucesso.');
   }
 
+  public static async getAll(userId: string): Promise<CommentModel[]> {
+    return await CommentModel.findAll({
+      where: {
+        userId: userId,
+      },
+      limit: 10,
+      order: [
+        ['id', 'DESC'],
+        ['created_at', 'DESC'],
+      ],
+    });
+  }
+
   private static async findByOffsetAndLimitAndPostId(
     offset: number,
     limit: number,

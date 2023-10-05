@@ -86,4 +86,19 @@ export default class CommentController {
       next(error);
     }
   }
+
+  public static async findAll(
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ) {
+    logger.info(`Get all comments with user id ${request.user.id}`);
+    try {
+      return response
+        .status(200)
+        .json(await CommentService.getAll(request.user.id));
+    } catch (error) {
+      next(error);
+    }
+  }
 }

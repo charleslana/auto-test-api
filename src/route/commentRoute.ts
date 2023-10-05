@@ -45,4 +45,8 @@ commentRoute
     CommentController.delete
   );
 
+commentRoute
+  .route('/all/me')
+  .get(authenticateMiddleware, CommentController.findAll);
+
 export default commentRoute;
