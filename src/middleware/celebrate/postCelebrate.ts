@@ -49,6 +49,17 @@ export const postUpdateMiddleware = () => {
   );
 };
 
+export const searchPostMiddleware = () => {
+  return celebrate(
+    {
+      [Segments.QUERY]: {
+        title: Joi.string().min(1).max(255).required(),
+      },
+    },
+    { abortEarly: false }
+  );
+};
+
 export function escapePostHTMLMiddleware(
   request: Request,
   _response: Response,

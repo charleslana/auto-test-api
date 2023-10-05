@@ -1,13 +1,29 @@
 import UserRankEnum from '../../enum/UserRankEnum';
-import { celebrate, Joi, Segments } from 'celebrate';
+import { celebrate, CelebrateError, Joi, Segments } from 'celebrate';
 
 export const userCreateMiddleware = () => {
   return celebrate(
     {
       [Segments.BODY]: {
-        email: Joi.string().email().trim().max(50).required().messages({
-          'string.email': 'O campo {{#label}} deve conter um e-mail válido.',
-        }),
+        email: Joi.string()
+          .email()
+          .trim()
+          .max(50)
+          .required()
+          .messages({
+            'string.email': 'O campo {{#label}} deve conter um e-mail válido.',
+            'any.custom':
+              'O campo {{#label}} deve conter apenas letras minúsculas.',
+          })
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          .custom((value, _helpers) => {
+            if (value !== value.toLowerCase()) {
+              throw new CelebrateError(
+                'O campo email deve conter apenas letras minúsculas.'
+              );
+            }
+            return value;
+          }),
         password: Joi.string().required().min(6).max(50),
         passwordConfirmation: Joi.string()
           .valid(Joi.ref('password'))

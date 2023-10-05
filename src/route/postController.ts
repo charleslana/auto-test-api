@@ -8,6 +8,7 @@ import { pageMiddleware } from '../middleware/celebrate/pageCelebrate';
 import {
   postCreateMiddleware,
   postUpdateMiddleware,
+  searchPostMiddleware,
 } from '../middleware/celebrate/postCelebrate';
 
 const postRoute = express.Router();
@@ -42,5 +43,9 @@ postRoute
     roleMiddleware([UserRoleEnum.Admin]),
     PostController.delete
   );
+
+postRoute
+  .route('/search/by')
+  .get(searchPostMiddleware(), PostController.searchByTitle);
 
 export default postRoute;

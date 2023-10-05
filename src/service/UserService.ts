@@ -138,7 +138,9 @@ export default class UserService {
     const find = await UserModel.findOne({
       attributes: ['id', 'email', 'password', 'banned'],
       where: {
-        email: email,
+        email: {
+          [Op.iLike]: email,
+        },
       },
       include: [
         {

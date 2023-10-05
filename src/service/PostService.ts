@@ -4,7 +4,7 @@ import IPage from '../interface/IPage';
 import IPaginated from '../interface/IPaginated';
 import PostModel from '../model/PostModel';
 import UserModel from '../model/UserModel';
-import { Optional } from 'sequelize';
+import { Optional, Sequelize } from 'sequelize';
 
 export default class PostService {
   public static async save(model: PostModel): Promise<HandlerSuccess> {
@@ -64,6 +64,26 @@ export default class PostService {
       },
     });
     return new HandlerSuccess('Postagem excluída com sucesso.');
+  }
+
+  public static async searchByTitle(keyword: string): Promise<PostModel[]> {
+    return await PostModel.findAll({
+      where: Sequelize.literal(
+        `unaccent(LOWER("title")) ILIKE unaccent(LOWER('%${keyword}%'))`
+      ),
+      limit: 10,
+      order: [
+        ['id', 'DESC'],
+        ['created_at', 'DESC'],
+      ],
+      include: [
+        {
+          model: UserModel,
+          as: 'user',
+          attributes: ['name'],
+        },
+      ],
+    });
   }
 
   private static async findByOffsetAndLimit(

@@ -83,4 +83,20 @@ export default class PostController {
       next(error);
     }
   }
+
+  public static async searchByTitle(
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ) {
+    logger.info(`Search post with title ${request.query.title}`);
+    try {
+      const { title } = request.query;
+      return response
+        .status(200)
+        .json(await PostService.searchByTitle(title as string));
+    } catch (error) {
+      next(error);
+    }
+  }
 }
