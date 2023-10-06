@@ -227,6 +227,20 @@ module.exports = {
           experience: 6200,
           type: 'testingStrategy',
         },
+        {
+          name: 'Mestre da Simulação de Tráfego',
+          description:
+            'Você dominou a arte do teste de carga, simulando tráfego intenso e estressando sistemas com facilidade. Seus resultados precisos e análises detalhadas garantem que os aplicativos permaneçam resilientes mesmo sob a mais intensa pressão.',
+          experience: 3200,
+          type: 'loadTesting',
+        },
+        {
+          name: 'Executor de Carga Implacável',
+          description:
+            'Nada pode parar você! Você provou ser um executor implacável de testes de carga, deixando sistemas em estado de alerta com suas simulações rigorosas. Sua busca incessante por otimização e desempenho rendeu resultados impecáveis e sistemas mais robustos.',
+          experience: 6700,
+          type: 'loadTesting',
+        },
       ],
       {}
     );

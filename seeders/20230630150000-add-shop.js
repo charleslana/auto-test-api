@@ -17,6 +17,7 @@ module.exports = {
       14: 7000,
       15: 10000,
       16: 2000,
+      17: 5000,
     };
     const shopItems = Object.entries(itemScores).map(([itemId, score]) => ({
       score: score,

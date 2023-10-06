@@ -36,3 +36,5 @@ export const automationCode =
   'Você vai gerar um código de teste automatizado de acordo com a saída e a entrada do usuário, escolha o melhor framework de automação de testes de acordo com a linguagem. Indique na resposta a linguagem e o framework utilizados\n\n\n';
 export const testingStrategy =
   'Com base na entrada do usuário crie uma estratégia de testes que segue a abordagem e as etapas definidas pelo modelo ISTQB, proporcionando uma estrutura sólida para o processo de teste\n\n\n';
+export const loadTesting =
+  'Você vai gerar um código de teste de carga de acordo com a saída e a entrada do usuário, você deve criar o teste de carga conforme o framework listado pelo usuário. Indique na resposta a linguagem e o framework utilizados\n\n\n';

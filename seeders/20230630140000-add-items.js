@@ -107,6 +107,12 @@ module.exports = {
           expiry_day: null,
           type: 'testingStrategy',
         },
+        {
+          name: 'Gerador de código de Teste de Carga',
+          description: 'Ferramenta de gerador de testes de cargas.',
+          expiry_day: 15,
+          type: 'loadTesting',
+        },
       ],
       {}
     );

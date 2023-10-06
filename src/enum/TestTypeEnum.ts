@@ -15,6 +15,7 @@ enum TestTypeEnum {
   CucumberCode = 'cucumberCode',
   AutomationCode = 'automationCode',
   TestingStrategy = 'testingStrategy',
+  LoadTesting = 'loadTesting',
 }
 
 export default TestTypeEnum;

@@ -18,6 +18,7 @@ import {
   configuration,
   cucumberCode,
   gherkinLanguage,
+  loadTesting,
   performanceTest,
   qualityIndicator,
   securityTest,
@@ -141,6 +142,8 @@ export default class OpenAIService {
         return automationCode;
       case TestTypeEnum.TestingStrategy:
         return testingStrategy;
+      case TestTypeEnum.LoadTesting:
+        return loadTesting;
       default:
         return testGenerator;
     }
