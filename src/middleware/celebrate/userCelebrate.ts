@@ -42,14 +42,14 @@ export const userUpdateNameMiddleware = () => {
     {
       [Segments.BODY]: {
         name: Joi.string()
-          .pattern(/^[a-zA-ZÀ-ú0-9_]*$/)
+          .pattern(/^[a-zA-ZÀ-ú0-9_ ]*$/)
           .trim()
           .min(3)
           .max(20)
           .required()
           .messages({
             'string.pattern.base':
-              'o campo {{#label}} com o valor {:[.]} deve conter apenas letras, números ou o caractere underline',
+              'o campo {{#label}} com o valor {:[.]} deve conter apenas letras, números, espaços ou o caractere underline',
             'string.min':
               'O tamanho do texto de {{#label}} deve ter pelo menos {{#limit}} caracteres',
             'string.max':
