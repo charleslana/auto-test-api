@@ -64,6 +64,8 @@ export function translateEnumValue(value: TestTypeEnum): string {
       return 'Código Frameworks de Automação';
     case TestTypeEnum.TestingStrategy:
       return 'Gerador de Estratégia de Testes';
+    case TestTypeEnum.LoadTesting:
+      return 'Gerador de Teste de Carga';
     default:
       return '';
   }
